@@ -30,6 +30,7 @@
   --ok:#5FD18B;--ok-bg:#12301F;--warn:#F2B84B;--warn-bg:#3A2A08;--bad:#F0595E;--bad-bg:#3A1214;
 }
 *{box-sizing:border-box}
+html{--tabh:57px;--barh:73px}
 html,body,.screen{scrollbar-width:none;-ms-overflow-style:none}
 html::-webkit-scrollbar,body::-webkit-scrollbar,.screen::-webkit-scrollbar{display:none;width:0;height:0}
 html,body{margin:0;min-height:100%}
@@ -40,7 +41,8 @@ body{background:var(--stage);color:var(--text);font-family:'Noto Sans KR',-apple
   .frame{width:360px;height:772px;border-radius:28px;box-shadow:0 0 0 8px #0E0E10,0 24px 60px rgba(0,0,0,.35)}
 }
 .h{font-family:'Poppins','Noto Sans KR',sans-serif;font-weight:800;font-style:italic}
-.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top,0px) + 12px) 16px calc(96px + env(safe-area-inset-bottom,0px))}
+.screen{position:absolute;top:0;left:0;right:0;bottom:calc(var(--tabh) + env(safe-area-inset-bottom,0px));overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:calc(env(safe-area-inset-top,0px) + 12px) 16px 20px}
+.screen.hasbar{bottom:calc(var(--tabh) + var(--barh) + env(safe-area-inset-bottom,0px))}
 svg.i{width:24px;height:24px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 button,input{font-family:inherit}
 :focus-visible{outline:2px solid var(--brand-text);outline-offset:2px}
@@ -92,7 +94,7 @@ button,input{font-family:inherit}
 .note{color:var(--sub);font-size:15px;margin:12px 2px 0}
 
 /* 하단 탭, 하단 고정 바 */
-.tabbar{position:fixed;left:0;right:0;bottom:0;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabbar{position:fixed;left:0;right:0;bottom:0;height:calc(var(--tabh) + env(safe-area-inset-bottom,0px));box-sizing:border-box;z-index:5;display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
 .kv{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:11px 0;border-top:1px solid var(--line);font-size:14px}.kv:first-of-type{border-top:0}.kv span{color:var(--sub)}.kv b{text-align:right;word-break:keep-all}.kv .ok{color:var(--ok,#1a7f45)}.kv .no{color:var(--brand-text)}
 .score{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:6px}
 .score button{min-height:62px;border:1px solid var(--line);border-radius:4px;background:var(--soft);color:var(--text);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:4px 0;font-family:inherit}
@@ -108,7 +110,7 @@ button,input{font-family:inherit}
 .tab{position:relative;flex:1;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--sub);text-decoration:none;font-size:13px;font-weight:700}
 .tab[aria-current="page"]{color:var(--brand-text)}
 .tab[aria-current="page"]::before{content:'';position:absolute;top:0;left:50%;width:32px;height:4px;margin-left:-16px;background:var(--brand);transform:skewX(-20deg)}
-.actionbar{position:fixed;left:0;right:0;bottom:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line)}
+.actionbar{position:fixed;left:0;right:0;bottom:calc(var(--tabh) + env(safe-area-inset-bottom,0px));height:var(--barh);box-sizing:border-box;padding:12px 16px;background:var(--bg);border-top:1px solid var(--line)}
 
 /* 상세 */
 .dh{display:flex;align-items:center;gap:12px;min-height:56px}
@@ -325,6 +327,8 @@ var S = (function () {
 })();
 
 var runAct = null;   // 실행 중인 행동 {id,end}
+var MENTAL_IDS = ['mental'];   // 멘탈 루틴 항목(앞으로 추가)
+var SALES = ITEMS.filter(function (i) { return MENTAL_IDS.indexOf(i.id) < 0; }), MENTAL = ITEMS.filter(function (i) { return MENTAL_IDS.indexOf(i.id) >= 0; });
 function doneCount() { return ITEMS.filter(function (i) { return S.done[i.id]; }).length; }
 function details() {
   var g = S.goals[0];
@@ -394,8 +398,8 @@ function detail(id, body) {
   var bar = S.done[id]
     ? '<div class="actionbar"><a class="btn ghost" href="#home">오늘 루틴으로 돌아가기</a></div>'
     : '<div class="actionbar"><button class="btn" data-act="complete" data-id="' + id + '"' + (id === 'mental' && !(S.mental.emo && S.mental.body) ? ' disabled' : '') + '>' + ic('check') + '<span>' + (id === 'mental' && !(S.mental.emo && S.mental.body) ? '점수 두 개를 먼저 기록해요' : BTN[id]) + '</span></button></div>';
-  return '<div class="screen"><div class="dh"><button class="back" data-act="back" aria-label="뒤로 가기">' + ic('chev-l') + '</button><h2 class="h">' + it.title + '</h2></div>' +
-    '<p class="lead">' + LEAD[id] + '</p>' + body + '</div>' + bar;
+  return '<div class="screen hasbar"><div class="dh"><button class="back" data-act="back" aria-label="뒤로 가기">' + ic('chev-l') + '</button><h2 class="h">' + it.title + '</h2></div>' +
+    '<p class="lead">' + LEAD[id] + '</p>' + body + '</div>' + bar + tabbar('home');
 }
 var EXTAG = '<span class="ex">예시 데이터입니다</span>';
 
@@ -408,16 +412,18 @@ VIEWS.home = function () {
   var cta = next
     ? '<a class="btn" href="#' + next.id + '"><span>다음 · ' + next.title + '</span>' + ic('chev-r') + '</a>'
     : '<a class="btn" href="#log"><span>오늘 기록 보기</span>' + ic('chev-r') + '</a>';
-  var rows = ITEMS.map(function (i) {
+  var rowOf = function (i) {
     var d = S.done[i.id];
     return '<a class="row" href="#' + i.id + '"><span class="ib ' + (d ? 'done' : '') + '">' + ic(d ? 'check' : i.icon) + '</span>' +
       '<span class="rt"><b>' + i.title + '</b><span>' + summary(i.id) + '</span></span>' + chipFor(i.id) + ic('chev-r', 'chev') + '</a>';
-  }).join('');
+  };
+  var rows = SALES.map(rowOf).join(''), mrows = MENTAL.map(rowOf).join('');
   return '<div class="screen">' + brandRow() +
     '<section class="hero" aria-label="오늘의 진행"><div class="date">' + longDate(now()) + '</div>' +
     '<div class="top"><h1 class="h">' + (n === total ? '오늘 루틴을<br>모두 마쳤어요' : '오늘의 루틴을<br>점검해요') + '</h1><div class="big h"><span data-n>' + n + '</span><small>/' + total + '</small></div></div>' +
     '<div class="seg" role="img" aria-label="' + total + '개 중 ' + n + '개 완료">' + seg + '</div>' + cta + '</section>' +
-    '<h2 class="sub">오늘의 루틴</h2><div class="list">' + rows + '</div>' +
+    '<h2 class="sub">오늘의 영업루틴</h2><div class="list">' + rows + '</div>' +
+    '<h2 class="sub">오늘의 멘탈루틴</h2><div class="list">' + mrows + '</div>' +
     (anySample() ? '<p class="note">' + EXTAG + ' 교육 일정, 목표, 고객, 할 일 일부는 예시예요. 직접 고치면 내 데이터가 돼요.</p>' : '') +
     '</div>' + tabbar('home');
 };
