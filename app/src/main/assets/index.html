@@ -736,6 +736,9 @@ VIEWS.settings = function () {
     (exportFail ? '<p class="note" style="margin-top:10px;color:var(--brand-text)">파일을 만들지 못했어요. 다시 시도해 주세요.</p>' : '') +
     (weekWarn ? '<p class="note" style="margin-top:10px">일주일에 한 번 정도 파일로 저장해 두면 안전해요.</p>' : '') +
     (smp ? '<p class="note">예시 기록도 \'예시\'로 표시되어 함께 저장돼요. 빼려면 기록 화면에서 \'예시 기록 숨기기\'를 누르세요.</p>' : '') + '</div>' +
+    (window.AndroidBridge ? '<div class="card"><div class="ct">알림 창 표시</div>' + kv('오늘의 루틴 알림', S.notifOn === false ? '꺼짐' : '<span class="ok">켜짐</span>') +
+      '<p class="note" style="margin-top:10px">휴대폰 알림 창에 오늘의 진행 상황(예: 3/6)과 다음 할 일을 보여줘요. 누르면 앱이 열려요.</p>' +
+      '<div style="margin-top:12px"><button class="btn ghost" data-act="notif-toggle"><span>' + (S.notifOn === false ? '알림 켜기' : '알림 끄기') + '</span></button></div></div>' : '') +
     '<div class="card"><div class="ct">엑셀 열 구성</div><p class="note" style="margin:0">' + XLS_COLS.join(' · ') + '</p></div></div>' + tabbar('settings');
 };
 
@@ -805,6 +808,16 @@ VIEWS.mental = function () {
 var app = document.getElementById('app');
 var lastRoute = null;
 function route() { var h = (location.hash || '#home').slice(1); return VIEWS[h] ? h : 'home'; }
+/* 안드로이드 앱: 알림 창에 오늘의 진행 상황 표시 (앱이 아닌 곳에서는 아무 일도 하지 않음) */
+function syncNotif() {
+  try {
+    if (!window.AndroidBridge || !AndroidBridge.setProgress) return;
+    if (S.notifOn === false) return;
+    var n = doneCount(), total = ITEMS.length, next = ITEMS.filter(function (i) { return !S.done[i.id]; })[0];
+    AndroidBridge.setProgress(n, total, n === total ? '오늘 루틴을 모두 마쳤어요' : '오늘의 루틴을 점검해요',
+      next ? '다음 · ' + next.title : '오늘 기록 보기', longDate(now()), '다음 · ' + ITEMS[0].title);
+  } catch (e) { }
+}
 function render() {
   rollover();
   var r = route(), sc = app.querySelector('.screen');
@@ -812,6 +825,7 @@ function render() {
   app.innerHTML = VIEWS[r]();
   var ns = app.querySelector('.screen'); if (ns) ns.scrollTop = top;
   lastRoute = r;
+  syncNotif();
 }
 window.addEventListener('hashchange', render);
 
@@ -868,6 +882,11 @@ app.addEventListener('click', function (e) {
   if (act === 'act-start') { var ac = ACTS[id]; if (ac) { runAct = { id: id, end: now() + ac.m * 60000 }; render(); } return; }
   if (act === 'act-stop') { runAct = null; render(); return; }
   if (act === 'act-done') { var pv = S.mental.acts[id]; S.mental.acts[id] = { at: now(), n: (pv ? pv.n : 0) + 1 }; runAct = null; save(); render(); return; }
+  if (act === 'notif-toggle') {
+    S.notifOn = S.notifOn === false; save();
+    try { if (S.notifOn === false) AndroidBridge.clearNotif(); } catch (er) { }
+    render(); return;
+  }
   if (act === 'log-view') { S.logView = el.getAttribute('data-v'); save(); render(); return; }
   if (act === 'toggle-sample-log') { S.hideSampleLog = !S.hideSampleLog; save(); render(); return; }
   if (act === 'toggle-plan') { S.planDone[id] = !S.planDone[id]; save(); render(); return; }
