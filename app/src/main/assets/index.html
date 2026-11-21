@@ -111,8 +111,8 @@ button,input{font-family:inherit}
 .hero.cp .top{align-items:center;margin-top:2px}.hero.cp h1{font-size:19px;line-height:1.3}.hero.cp .date{font-size:13px}
 .hero.cp .big{font-size:36px}.hero.cp .big small{font-size:18px}.hero.cp .seg{margin:10px 4px 10px}.hero.cp .seg i{height:6px}.hero.cp .btn{min-height:42px;font-size:15px}
 .sub.cs{margin:12px 0 6px;font-size:16px}
-.wk{--rowh:clamp(38px,calc((100cqh - 548px) / 5),58px);background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.wk-r{display:grid;grid-template-columns:90px repeat(7,1fr);align-items:stretch;border-top:1px solid var(--line);min-height:44px;min-height:var(--rowh)}
+.wk{--rowh:clamp(38px,calc((100cqh - 560px) / 5),58px);background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.wk-r{display:grid;grid-template-columns:104px repeat(5,1fr);align-items:stretch;border-top:1px solid var(--line);min-height:44px;min-height:var(--rowh)}
 .wk-r:first-child{border-top:0}
 .wk-h{min-height:40px}.wk-f{min-height:26px}
 .wk-l{display:flex;align-items:center;padding:0 10px;font-size:12px;font-weight:700;color:var(--sub)}
@@ -126,7 +126,7 @@ button,input{font-family:inherit}
 .mk.ok{background:var(--ok-bg);color:var(--ok)}.mk.late{background:var(--warn-bg);color:var(--warn)}
 .mk.todo{border:2px solid var(--brand)}.mk.none{color:var(--sub);opacity:.6;font-size:13px}
 .wk-f .wk-c.t{color:var(--brand-text)}
-.row.sm{min-height:56px;padding:8px 12px}.row.sm .ib{width:40px;height:40px}
+.row.sm{min-height:56px;padding:8px 12px}.row.sm .rt>span{font-size:14px}.row.sm .ib{width:40px;height:40px}
 .tab{position:relative;flex:1;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--sub);text-decoration:none;font-size:13px;font-weight:700}
 .tab[aria-current="page"]{color:var(--brand-text)}
 .tab[aria-current="page"]::before{content:'';position:absolute;top:0;left:50%;width:32px;height:4px;margin-left:-16px;background:var(--brand);transform:skewX(-20deg)}
@@ -264,7 +264,8 @@ var ITEMS = [
   { id: 'plan', title: '시간 계획 점검', icon: 'list' },
   { id: 'goal', title: '목표와 진행 상황', icon: 'target' },
   { id: 'clients', title: '진행 고객 현황', icon: 'users' },
-  { id: 'mental', title: '멘탈 관리', icon: 'heart' }
+  { id: 'mental', title: '멘탈 관리', icon: 'heart' },
+  { id: 'focus', title: '집중 관리', icon: 'target' }
 ];
 var LEAD = {
   attend: '출근한 시각을 기록해요. 기준 시각 이후는 지각으로 표시돼요.',
@@ -272,7 +273,8 @@ var LEAD = {
   plan: '오늘 할 일을 시간순으로 점검하고 하나씩 체크해요.',
   goal: '이번 달 목표와 현재 진행 상황을 확인하고 고쳐요.',
   clients: '진행 중인 고객의 준비와 진행 정도를 확인해요.',
-  mental: '오늘의 감정과 몸 상태를 점수로 남기고, 지금 상태에 맞는 행동을 바로 해봐요.'
+  mental: '오늘의 감정과 몸 상태를 점수로 남기고, 지금 상태에 맞는 행동을 바로 해봐요.',
+  focus: '가장 중요한 목표를 향하고 있는지, 얼마나 몰입하고 있는지 점수로 확인해요.'
 };
 var BTN = {
   attend: '지금 출근 기록하기',
@@ -280,7 +282,8 @@ var BTN = {
   plan: '시간 계획 점검 완료',
   goal: '진행 상황 점검 완료',
   clients: '고객 현황 확인 완료',
-  mental: '멘탈 관리 완료'
+  mental: '멘탈 관리 완료',
+  focus: '집중 관리 완료'
 };
 var STAGES = ['준비', '상담', '제안', '계약'];
 /* 예시 데이터 */
@@ -288,12 +291,12 @@ var EDU_TODAY = [{ t: '14:00', title: '신상품 교육' }];
 var EDU_WEEK = [{ t: '14:00', title: '신상품 교육 (오늘)' }, { t: '목 10:00', title: '상담 스킬 교육' }, { t: '금 15:00', title: '보상 사례 공유' }];
 var EDU_TOMORROW = '내일 아침 교육';
 var PEOPLE = [
-  { n: '설계사 A', t: '08:41', c: [1, 1, 1, 1, 1, 1] },
-  { n: '설계사 B', t: '08:58', c: [1, 1, 1, 1, 0, 1] },
-  { n: '설계사 C', t: '09:12', c: [1, 1, 0, 1, 0, 0] },
-  { n: '설계사 D', t: null, c: [0, 0, 0, 0, 0, 0] },
-  { n: '설계사 E', t: '08:49', c: [1, 1, 1, 0, 0, 1] },
-  { n: '설계사 F', t: '09:03', c: [1, 0, 0, 0, 0, 0] }
+  { n: '설계사 A', t: '08:41', c: [1, 1, 1, 1, 1, 1, 1] },
+  { n: '설계사 B', t: '08:58', c: [1, 1, 1, 1, 0, 1, 1] },
+  { n: '설계사 C', t: '09:12', c: [1, 1, 0, 1, 0, 0, 0] },
+  { n: '설계사 D', t: null, c: [0, 0, 0, 0, 0, 0, 0] },
+  { n: '설계사 E', t: '08:49', c: [1, 1, 1, 0, 0, 1, 0] },
+  { n: '설계사 F', t: '09:03', c: [1, 0, 0, 0, 0, 0, 0] }
 ];
 
 /* ---------- 유틸 ---------- */
@@ -312,7 +315,7 @@ function isLate(t) { var d = new Date(t); d.setHours(WORK_START_H, 0, 0, 0); ret
 /* ---------- 저장소: 모든 읽기와 쓰기는 try/catch ---------- */
 function defaults() {
   return {
-    v: 1, date: dstr(now()), done: {}, planDone: {}, answer: null, history: {}, mental: { emo: 0, body: 0, acts: {} }, hideSampleLog: false, logView: 'day',
+    v: 1, date: dstr(now()), done: {}, planDone: {}, answer: null, history: {}, mental: { emo: 0, body: 0, acts: {} }, focus: { dir: 0, imm: 0 }, hideSampleLog: false, logView: 'day',
     plan: [
       { id: 'p1', title: '오전 고객 전화', time: '09:30', sample: true },
       { id: 'p2', title: '제안서 점검', time: '11:00', sample: true },
@@ -342,19 +345,20 @@ var S = (function () {
   ['done', 'planDone', 'history'].forEach(function (k) { if (!m[k] || typeof m[k] !== 'object') m[k] = {}; });
   if (!m.mental || typeof m.mental !== 'object') m.mental = { emo: 0, body: 0, acts: {} };
   if (!m.mental.acts) m.mental.acts = {};
+  if (!m.focus || typeof m.focus !== 'object') m.focus = { dir: 0, imm: 0 };
   if (typeof m.date !== 'string') m.date = dstr(now());
   return m;
 })();
 
 var runAct = null;   // 실행 중인 행동 {id,end}
-var MENTAL_IDS = ['mental'];   // 멘탈 루틴 항목(앞으로 추가)
+var MENTAL_IDS = ['mental', 'focus'];   // 멘탈 루틴 항목(앞으로 추가)
 var SALES = ITEMS.filter(function (i) { return MENTAL_IDS.indexOf(i.id) < 0; }), MENTAL = ITEMS.filter(function (i) { return MENTAL_IDS.indexOf(i.id) >= 0; });
 function doneCount() { return ITEMS.filter(function (i) { return S.done[i.id]; }).length; }
 function details() {
   var g = S.goals[0];
   return { ans: S.answer ? S.answer.v : '', pd: S.plan.filter(function (p) { return S.planDone[p.id]; }).length, pt: S.plan.length,
     g: g ? { name: g.name, cur: g.cur, target: g.target, unit: g.unit } : null, cn: S.clients.length, ck: S.clients.filter(function (c) { return c.stage >= 3; }).length,
-    m: { emo: S.mental.emo, body: S.mental.body, acts: Object.keys(S.mental.acts).length } };
+    m: { emo: S.mental.emo, body: S.mental.body, acts: Object.keys(S.mental.acts).length }, f: { dir: S.focus.dir, imm: S.focus.imm } };
 }
 function rollover() {
   var t = dstr(now());
@@ -363,7 +367,7 @@ function rollover() {
   if (n > 0) S.history[S.date] = { n: n, cells: ITEMS.map(function (i) { return S.done[i.id] ? 1 : 0; }), at: a ? a.at : null, late: a ? !!a.late : false, det: details() };
   var keys = Object.keys(S.history).sort();
   while (keys.length > 60) delete S.history[keys.shift()];
-  S.date = t; S.done = {}; S.planDone = {}; S.answer = null; S.mental = { emo: 0, body: 0, acts: {} }; runAct = null;   // 목표, 고객, 일정 목록은 유지
+  S.date = t; S.done = {}; S.planDone = {}; S.answer = null; S.mental = { emo: 0, body: 0, acts: {} }; S.focus = { dir: 0, imm: 0 }; runAct = null;   // 목표, 고객, 일정 목록은 유지
   save();
   return true;
 }
@@ -390,7 +394,8 @@ function summary(id) {
   if (id === 'plan') { var dn = S.plan.filter(function (p) { return S.planDone[p.id]; }).length; return j(['오늘 일정 ' + S.plan.length + '개', dn + '개 완료']); }
   if (id === 'goal') { var g = S.goals[0]; return g ? j([esc(g.name) + ' ' + g.cur + '/' + g.target + esc(g.unit), '이번 달']) : '목표를 추가해 주세요'; }
   if (id === 'clients') { var k = S.clients.filter(function (c) { return c.stage >= 3; }).length; return S.clients.length ? j(['진행 고객 ' + S.clients.length + '명', '계약 ' + k + '명']) : '고객을 추가해 주세요'; }
-  if (id === 'mental') { var mm = S.mental; return mm.emo && mm.body ? j(['감정 ' + mm.emo, '몸 ' + mm.body, '실행 ' + Object.keys(mm.acts).length + '개']) : '감정과 몸 상태 점수를 기록해요'; }
+  if (id === 'focus') { var ff = S.focus; return ff.dir && ff.imm ? j(['방향성 ' + ff.dir, '몰입도 ' + ff.imm]) : '점수를 기록해요'; }
+  if (id === 'mental') { var mm = S.mental; return mm.emo && mm.body ? j(['감정 ' + mm.emo, '몸 ' + mm.body, '실행 ' + Object.keys(mm.acts).length + '개']) : '점수를 기록해요'; }
   return '';
 }
 function chipFor(id) {
@@ -413,11 +418,12 @@ function brandRow() {
   return '<div class="brand"><div class="logo">' + ic('cube') + '<b class="h">ELITE</b><span>Sales Group</span></div>' +
     '<button class="iconbtn" data-act="theme" aria-label="' + (dark ? '라이트 모드로 바꾸기' : '다크 모드로 바꾸기') + '">' + ic(dark ? 'sun' : 'moon') + '</button></div>';
 }
+function scoresReady(id) { return id === 'mental' ? !!(S.mental.emo && S.mental.body) : (id === 'focus' ? !!(S.focus.dir && S.focus.imm) : true); }
 function detail(id, body) {
   var it = ITEMS.filter(function (i) { return i.id === id; })[0];
   var bar = S.done[id]
     ? '<div class="actionbar"><a class="btn ghost" href="#home">오늘 루틴으로 돌아가기</a></div>'
-    : '<div class="actionbar"><button class="btn" data-act="complete" data-id="' + id + '"' + (id === 'mental' && !(S.mental.emo && S.mental.body) ? ' disabled' : '') + '>' + ic('check') + '<span>' + (id === 'mental' && !(S.mental.emo && S.mental.body) ? '점수 두 개를 먼저 기록해요' : BTN[id]) + '</span></button></div>';
+    : '<div class="actionbar"><button class="btn" data-act="complete" data-id="' + id + '"' + (!scoresReady(id) ? ' disabled' : '') + '>' + ic('check') + '<span>' + (!scoresReady(id) ? '점수 두 개를 먼저 기록해요' : BTN[id]) + '</span></button></div>';
   return '<div class="screen hasbar"><div class="dh"><button class="back" data-act="back" aria-label="뒤로 가기">' + ic('chev-l') + '</button><h2 class="h">' + it.title + '</h2></div>' +
     '<p class="lead">' + LEAD[id] + '</p>' + body + '</div>' + bar + tabbar('home');
 }
@@ -427,7 +433,7 @@ var EXTAG = '<span class="ex">예시 데이터입니다</span>';
 var VIEWS = {};
 function weekDays() {
   var p = S.date.split('-'), d = new Date(+p[0], +p[1] - 1, +p[2]), off = (d.getDay() + 6) % 7, out = [], i, x;
-  for (i = 0; i < 7; i++) { x = new Date(d.getFullYear(), d.getMonth(), d.getDate() - off + i); out.push({ d: dstr(x.getTime()), wd: WD[x.getDay()], n: x.getDate() }); }
+  for (i = 0; i < 5; i++) { x = new Date(d.getFullYear(), d.getMonth(), d.getDate() - off + i); out.push({ d: dstr(x.getTime()), wd: WD[x.getDay()], n: x.getDate() }); }
   return out;
 }
 function weekTable() {
@@ -539,7 +545,7 @@ VIEWS.clients = function () {
 };
 function cells(c) { return '<div class="cells">' + c.map(function (x) { return '<i class="' + (x ? 'on' : '') + '"></i>'; }).join('') + '<em>' + c.reduce(function (a, b) { return a + b; }, 0) + '/' + c.length + '</em></div>'; }
 /* 기록: 날짜별 카드 + 2주치 예시 */
-var LOGLAB = ['출근', '교육', '계획', '목표', '고객', '멘탈'];
+var LOGLAB = ['출근', '교육', '계획', '목표', '고객', '멘탈', '집중'];
 // [완료 칸, 출근, 참석응답, 완료한 일정 수, 신규 계약, 계약 고객]  (어제부터 14일 전까지)
 var SAMPLE_PAT = [
   ['11111', '08:51', 'y', 4, 2, 1], ['11110', '09:08', 'y', 3, 2, 1], ['11111', '08:47', 'y', 4, 2, 1],
@@ -548,15 +554,16 @@ var SAMPLE_PAT = [
   ['11110', '09:03', 'n', 3, 1, 0], ['11111', '08:53', 'y', 4, 0, 0], ['01110', null, 'y', 4, 0, 0],
   ['11111', '08:46', 'y', 4, 0, 0], ['11011', '09:12', '', 2, 0, 0]
 ];
+var FS = [[4,3],[3,3],[4,4],[2,2],[3,2],[5,4],[4,3],[0,0],[4,4],[3,3],[4,5],[0,0],[5,4],[3,2]];
 var MS = [[4,3,1],[3,3,2],[4,4,0],[2,2,3],[3,2,2],[4,4,1],[4,3,1],[0,0,0],[5,4,0],[3,3,2],[4,4,0],[0,0,0],[4,5,1],[3,2,3]];
 function sampleRecords() {
   return SAMPLE_PAT.map(function (p, k) {
     var d = new Date(now()); d.setDate(d.getDate() - (k + 1));
     var at = null, late = false;
     if (p[1]) { var hh = +p[1].slice(0, 2), mm = +p[1].slice(3); var t = new Date(d); t.setHours(hh, mm, 0, 0); at = t.getTime(); late = isLate(at); }
-    var ms = MS[k] || [0, 0, 0];
-    return { d: dstr(d.getTime()), sample: true, cells: p[0].split('').map(Number).concat([ms[0] > 0 ? 1 : 0]), at: at, late: late,
-      det: { ans: p[2], pd: p[3], pt: 4, g: { name: '신규 계약', cur: p[4], target: 5, unit: '건' }, cn: 6, ck: p[5], m: { emo: ms[0], body: ms[1], acts: ms[2] } } };
+    var ms = MS[k] || [0, 0, 0], fs = FS[k] || [0, 0];
+    return { d: dstr(d.getTime()), sample: true, cells: p[0].split('').map(Number).concat([ms[0] > 0 ? 1 : 0, fs[0] > 0 ? 1 : 0]), at: at, late: late,
+      det: { ans: p[2], pd: p[3], pt: 4, g: { name: '신규 계약', cur: p[4], target: 5, unit: '건' }, cn: 6, ck: p[5], m: { emo: ms[0], body: ms[1], acts: ms[2] }, f: { dir: fs[0], imm: fs[1] } } };
   });
 }
 function logRecords() {
@@ -573,10 +580,11 @@ function lineText(i, r) {
   if (id === 'edu') return dt ? j(['확인함', '내일 ' + (dt.ans === 'y' || dt.ans === 'yes' ? '참석' : (dt.ans === 'n' || dt.ans === 'no' ? '불참' : '무응답'))]) : '확인함';
   if (id === 'plan') return dt ? '일정 ' + dt.pd + '/' + dt.pt + ' 완료' : '완료';
   if (id === 'goal') return dt && dt.g ? esc(dt.g.name) + ' ' + dt.g.cur + '/' + dt.g.target + esc(dt.g.unit) : '완료';
+  if (id === 'focus') return dt && dt.f && dt.f.dir ? j(['방향성 ' + dt.f.dir, '몰입도 ' + dt.f.imm]) : '완료';
   if (id === 'mental') return dt && dt.m && dt.m.emo ? j(['감정 ' + dt.m.emo, '몸 ' + dt.m.body, '실행 ' + dt.m.acts + '개']) : '완료';
   return dt ? j(['고객 ' + dt.cn + '명', '계약 ' + dt.ck + '명']) : '완료';
 }
-var LOGVIEWS = [['day', '날짜별'], ['attend', '출근별'], ['edu', '교육별'], ['plan', '계획별'], ['goal', '목표별'], ['clients', '고객별'], ['mental', '멘탈별']];
+var LOGVIEWS = [['day', '날짜별'], ['attend', '출근별'], ['edu', '교육별'], ['plan', '계획별'], ['goal', '목표별'], ['clients', '고객별'], ['mental', '멘탈별'], ['focus', '집중별']];
 function cnt(r) { return r.cells.reduce(function (a, b) { return a + b; }, 0); }
 function isYes(a) { return a === 'y' || a === 'yes'; }
 function isNo(a) { return a === 'n' || a === 'no'; }
@@ -634,6 +642,16 @@ function itemView(id, recs) {
     rowFn = function (r) {
       if (!r.det || !r.det.g || !(cnt(r) > 0)) return rhead(r, '<span class="chip">기록 없음</span>');
       var g = r.det.g; return rhead(r, esc(g.name) + ' ' + g.cur + '/' + g.target + esc(g.unit)) + pbar(g.cur / Math.max(1, g.target) * 100);
+    };
+  } else if (id === 'focus') {
+    var wf = recs.filter(function (r) { return r.det && r.det.f && r.det.f.dir; });
+    var avg = function (k) { return wf.length ? Math.round(wf.reduce(function (a, r) { return a + r.det.f[k]; }, 0) / wf.length * 10) / 10 : '-'; };
+    st = tiles([[avg('dir'), '평균 방향성'], [avg('imm'), '평균 몰입도'], [wf.filter(function (r) { return r.det.f.dir >= 4 && r.det.f.imm >= 4; }).length, '둘 다 4점 이상']]);
+    cap = '위 막대는 방향성, 아래 막대는 몰입도예요(1~5점). 4점 이상은 초록이에요.';
+    rowFn = function (r) {
+      if (!r.det || !r.det.f || !r.det.f.dir) return rhead(r, '<span class="chip">기록 없음</span>');
+      var f = r.det.f;
+      return rhead(r, j(['방향성 ' + f.dir, '몰입도 ' + f.imm])) + pbar(f.dir * 20, f.dir <= 2, f.dir >= 4) + pbar(f.imm * 20, f.imm <= 2, f.imm >= 4);
     };
   } else if (id === 'mental') {
     var wm = recs.filter(function (r) { return r.det && r.det.m && r.det.m.emo; });
@@ -696,7 +714,7 @@ VIEWS.admin = function () {
 /* ---------- 설정: 저장 위치 확인과 엑셀 내보내기 ---------- */
 var exportFail = false, exportMsg = '';
 var XLS_COLS = ['날짜', '요일', '구분', '완료 항목 수', '출근 완료', '출근 시각', '출근 상태', '교육 확인', '내일 교육 응답', '계획 점검', '일정 완료', '일정 전체', '일정 달성률',
-  '목표 점검', '목표 이름', '목표 현재', '목표 값', '목표 달성률', '고객 확인', '진행 고객 수', '계약 고객 수', '멘탈 점검', '감정 점수', '몸 점수', '실행한 행동 수'];
+  '목표 점검', '목표 이름', '목표 현재', '목표 값', '목표 달성률', '고객 확인', '진행 고객 수', '계약 고객 수', '멘탈 점검', '감정 점수', '몸 점수', '실행한 행동 수', '집중 점검', '방향성 점수', '몰입도 점수'];
 function exportRows() {
   var recs = logRecords().slice().sort(function (a, b) { return a.d < b.d ? -1 : 1; });
   return recs.map(function (r) {
@@ -707,7 +725,8 @@ function exportRows() {
       c[1] ? 'O' : 'X', ans, c[2] ? 'O' : 'X', dt.pd == null ? '' : dt.pd, dt.pt == null ? '' : dt.pt, dt.pt ? dt.pd / dt.pt : '',
       c[3] ? 'O' : 'X', g ? g.name : '', g ? g.cur : '', g ? g.target : '', g && g.target ? g.cur / g.target : '',
       c[4] ? 'O' : 'X', dt.cn == null ? '' : dt.cn, dt.ck == null ? '' : dt.ck,
-      c[5] ? 'O' : 'X', dt.m && dt.m.emo ? dt.m.emo : '', dt.m && dt.m.emo ? dt.m.body : '', dt.m && dt.m.emo ? dt.m.acts : ''];
+      c[5] ? 'O' : 'X', dt.m && dt.m.emo ? dt.m.emo : '', dt.m && dt.m.emo ? dt.m.body : '', dt.m && dt.m.emo ? dt.m.acts : '',
+      c[6] ? 'O' : 'X', dt.f && dt.f.dir ? dt.f.dir : '', dt.f && dt.f.dir ? dt.f.imm : ''];
   });
 }
 var CRC_T = (function () { var t = [], n, k, c; for (n = 0; n < 256; n++) { c = n; for (k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
@@ -729,7 +748,7 @@ function zipStore(files) {
   return new Blob(parts, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 }
 function xe(v) { return String(v).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, ''); }
-function colL(i) { return String.fromCharCode(65 + i); }
+function colL(i) { return i < 26 ? String.fromCharCode(65 + i) : String.fromCharCode(64 + Math.floor(i / 26)) + String.fromCharCode(65 + i % 26); }
 function buildXlsx() {
   var rows = exportRows(), pct = { 12: 1, 17: 1 };
   function cell(v, ci, ri, hdr) {
@@ -741,7 +760,7 @@ function buildXlsx() {
   }
   var sd = '<row r="1">' + XLS_COLS.map(function (h, i) { return cell(h, i, 0, true); }).join('') + '</row>' +
     rows.map(function (r, k) { return '<row r="' + (k + 2) + '">' + r.map(function (v, i) { return cell(v, i, k + 1); }).join('') + '</row>'; }).join('');
-  var widths = [12, 6, 16, 12, 9, 10, 10, 9, 14, 9, 9, 9, 11, 9, 12, 9, 8, 11, 9, 11, 11, 9, 9, 9, 12];
+  var widths = [12, 6, 16, 12, 9, 10, 10, 9, 14, 9, 9, 9, 11, 9, 12, 9, 8, 11, 9, 11, 11, 9, 9, 9, 12, 9, 10, 10];
   var X = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n';
   return zipStore([
     { name: '[Content_Types].xml', data: X + '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>' },
@@ -822,9 +841,9 @@ function recommend(emo, body) {
   var mn = Math.min(emo, body);
   return { lv: mn <= 2 ? 'low' : (mn === 3 ? 'mid' : 'high'), ids: out.slice(0, 4) };
 }
-function scoreRow(key, labels, cur) {
+function scoreRow(key, labels, cur, actName) {
   return '<div class="score" role="group">' + labels.map(function (l, i) {
-    return '<button data-act="m-score" data-k="' + key + '" data-v="' + (i + 1) + '" aria-pressed="' + (cur === i + 1) + '"><b class="h">' + (i + 1) + '</b><span>' + l + '</span></button>';
+    return '<button data-act="' + (actName || 'm-score') + '" data-k="' + key + '" data-v="' + (i + 1) + '" aria-pressed="' + (cur === i + 1) + '"><b class="h">' + (i + 1) + '</b><span>' + l + '</span></button>';
   }).join('') + '</div>';
 }
 function actCard(id) {
@@ -850,6 +869,16 @@ VIEWS.mental = function () {
     body += '<p class="hint">두 점수를 모두 기록하면 지금 상태에 맞는 행동을 보여드려요.</p>';
   }
   return detail('mental', body);
+};
+
+/* ---------- 집중 관리 ---------- */
+var DIR_L = ['흐릿', '헷갈림', '보통', '뚜렷', '확실'], IMM_L = ['산만', '흔들림', '보통', '집중', '몰입'];
+VIEWS.focus = function () {
+  var f = S.focus;
+  var body = '<div class="card"><div class="ct">방향성</div><p class="muted">지금 내가 가장 중요하게 생각하는 목표에 집중하고 있나요? 1 흐릿 ~ 5 확실</p>' + scoreRow('dir', DIR_L, f.dir, 'f-score') + '</div>' +
+    '<div class="card"><div class="ct">몰입도</div><p class="muted">중요하게 생각하고 있는 목표에 집중도는 몇 점인가요? 1 산만 ~ 5 몰입</p>' + scoreRow('imm', IMM_L, f.imm, 'f-score') + '</div>';
+  if (!(f.dir && f.imm)) body += '<p class="hint">두 점수를 모두 기록하면 완료할 수 있어요.</p>';
+  return detail('focus', body);
 };
 
 /* ---------- 라우팅과 렌더 ---------- */
@@ -891,7 +920,7 @@ app.addEventListener('click', function (e) {
   }
   if (act === 'complete') {
     if (S.done[id]) return;
-    if (id === 'mental' && !(S.mental.emo && S.mental.body)) return;
+    if (!scoresReady(id)) return;
     var t = now(); S.done[id] = id === 'attend' ? { at: t, late: isLate(t) } : { at: t };
     save(); location.hash = '#home'; if (route() === 'home') render(); return;
   }
@@ -927,6 +956,7 @@ app.addEventListener('click', function (e) {
     return;
   }
   if (act === 'm-score') { S.mental[el.getAttribute('data-k')] = +el.getAttribute('data-v'); save(); render(); return; }
+  if (act === 'f-score') { S.focus[el.getAttribute('data-k')] = +el.getAttribute('data-v'); save(); render(); return; }
   if (act === 'act-start') { var ac = ACTS[id]; if (ac) { runAct = { id: id, end: now() + ac.m * 60000 }; render(); } return; }
   if (act === 'act-stop') { runAct = null; render(); return; }
   if (act === 'act-done') { var pv = S.mental.acts[id]; S.mental.acts[id] = { at: now(), n: (pv ? pv.n : 0) + 1 }; runAct = null; save(); render(); return; }
