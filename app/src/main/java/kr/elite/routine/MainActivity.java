@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.content.ContentValues;
 import android.net.Uri;
+import android.provider.Settings;
+import android.view.WindowManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -35,9 +37,22 @@ public class MainActivity extends Activity {
         if (Build.VERSION.SDK_INT >= 33 && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
         }
+        applyLock(Notifs.prefs(this).getBoolean("lock", false));
         Notifs.scheduleDaily(this);
         Notifs.resetIfNewDay(this);
         web.loadUrl("file:///android_asset/index.html");
+    }
+
+    /** 잠금화면 위에 앱 표시 켜기/끄기 */
+    private void applyLock(boolean on) {
+        if (Build.VERSION.SDK_INT >= 27) { setShowWhenLocked(on); }
+        else if (on) getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+        else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+    }
+
+    @Override protected void onResume() {
+        super.onResume();   // 설정 화면에서 돌아오면 권한 상태를 다시 읽는다
+        if (web != null) web.post(() -> web.evaluateJavascript("window.permBack&&permBack()", null));
     }
 
     @Override public void onRequestPermissionsResult(int code, String[] perms, int[] res) {
@@ -49,6 +64,17 @@ public class MainActivity extends Activity {
     class Bridge {
         @JavascriptInterface public void setProgress(int done, int total, String title, String next, String date, String first) {
             Notifs.post(MainActivity.this, done, total, title, next, date, first);
+        }
+        @JavascriptInterface public void setLockShow(boolean on) {
+            Notifs.prefs(MainActivity.this).edit().putBoolean("lock", on).apply();
+            runOnUiThread(() -> applyLock(on));
+        }
+        @JavascriptInterface public boolean canOverlay() { return Build.VERSION.SDK_INT < 23 || Settings.canDrawOverlays(MainActivity.this); }
+        @JavascriptInterface public void openOverlaySettings() {
+            runOnUiThread(() -> {
+                try { startActivity(new android.content.Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()))); }
+                catch (Exception e) { startActivity(new android.content.Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()))); }
+            });
         }
         @JavascriptInterface public void clearNotif() { Notifs.clear(MainActivity.this); }
         @JavascriptInterface public boolean saveFile(String name, String base64) {

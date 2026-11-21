@@ -47,6 +47,7 @@ public class Notifs {
                 .setOnlyAlertOnce(true)
                 .setShowWhen(false)
                 .setCategory(Notification.CATEGORY_STATUS)
+                .setVisibility(prefs(c).getBoolean("lock", false) ? Notification.VISIBILITY_PUBLIC : Notification.VISIBILITY_PRIVATE)
                 .setContentIntent(pi)
                 .build();
         c.getSystemService(NotificationManager.class).notify(ID, n);

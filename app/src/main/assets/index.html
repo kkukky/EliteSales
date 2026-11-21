@@ -130,6 +130,11 @@ button,input{font-family:inherit}
 .mk.sc{font-size:14px;font-weight:800;border-radius:4px;width:26px;height:26px}
 .mk.sc.s1,.mk.sc.s2{background:var(--bad-bg);color:var(--bad)}.mk.sc.s3{background:var(--warn-bg);color:var(--warn)}.mk.sc.s4,.mk.sc.s5{background:var(--ok-bg);color:var(--ok)}
 .mk.sc.todo{width:22px;height:22px}
+.swr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0}
+.swr b{font-size:14px}
+.sw{position:relative;flex:none;width:52px;height:30px;border:0;border-radius:15px;background:var(--line);cursor:pointer;transition:background .15s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35);transition:transform .15s}
+.sw[aria-checked="true"]{background:var(--brand)}.sw[aria-checked="true"]::after{transform:translateX(22px)}
 .row.sm{min-height:56px;padding:8px 12px}.row.sm .rt>span{font-size:14px}.row.sm .ib{width:40px;height:40px}
 .decl{position:relative;margin:8px 0 0;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:6px;padding:12px 14px 10px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
 .decl p{margin:0 0 8px;font-size:15px;line-height:1.5;font-weight:700;word-break:keep-all;white-space:pre-line}
@@ -845,6 +850,16 @@ function storageInfo() {
 }
 function fmtDT(t) { var d = new Date(t); return dstr(t) + ' ' + hm(t); }
 function fmtSize(b) { return b < 1024 ? b + ' B' : (Math.round(b / 102.4) / 10) + ' KB'; }
+function canOverlay() { try { return !!AndroidBridge.canOverlay(); } catch (e) { return false; } }
+function lockCard() {
+  var on = !!S.lockShow, ov = canOverlay(), kv = function (k, v) { return '<div class="kv"><span>' + k + '</span><b>' + v + '</b></div>'; };
+  return '<div class="card"><div class="ct">잠금화면 · 다른 앱 위에 표시</div>' +
+    '<div class="swr"><b>잠금화면 위에 표시</b><button class="sw" role="switch" aria-checked="' + on + '" aria-label="잠금화면 위에 표시" data-act="lock-toggle"></button></div>' +
+    '<p class="note" style="margin:4px 0 0">켜면 화면이 잠겨 있어도 알림 창의 오늘 진행 상황이 보이고, 알림을 눌렀을 때 잠금을 풀지 않고 앱이 먼저 열려요.</p>' +
+    kv('다른 앱 위에 표시 권한', ov ? '<span class="ok">허용됨</span>' : '<span class="late">허용 안 됨</span>') +
+    (ov ? '' : '<p class="note" style="margin:10px 0 0">아래 버튼을 눌러 열리는 화면에서 \'ELITE 루틴\'을 찾아 허용해 주세요.</p>') +
+    '<div style="margin-top:12px"><button class="btn ghost" data-act="overlay-open"><span>' + (ov ? '다른 앱 위에 표시 설정 열기' : '다른 앱 위에 표시 켜기') + '</span></button></div></div>';
+}
 VIEWS.settings = function () {
   var st = storageInfo(), recs = logRecords(), real = recs.filter(function (r) { return !r.sample; }).length, smp = recs.length - real;
   var kv = function (k, v) { return '<div class="kv"><span>' + k + '</span><b>' + v + '</b></div>'; };
@@ -869,6 +884,7 @@ VIEWS.settings = function () {
     (window.AndroidBridge ? '<div class="card"><div class="ct">알림 창 표시</div>' + kv('오늘의 루틴 알림', S.notifOn === false ? '꺼짐' : '<span class="ok">켜짐</span>') +
       '<p class="note" style="margin-top:10px">휴대폰 알림 창에 오늘의 진행 상황(예: 3/6)과 다음 할 일을 보여줘요. 누르면 앱이 열려요.</p>' +
       '<div style="margin-top:12px"><button class="btn ghost" data-act="notif-toggle"><span>' + (S.notifOn === false ? '알림 켜기' : '알림 끄기') + '</span></button></div></div>' : '') +
+    (window.AndroidBridge && AndroidBridge.setLockShow ? lockCard() : '') +
     '<div class="card"><div class="ct">엑셀 열 구성</div><p class="note" style="margin:0">' + XLS_COLS.join(' · ') + '</p></div></div>' + tabbar('settings');
 };
 
@@ -1011,6 +1027,7 @@ var lastRoute = null;
 function route() { var h = (location.hash || '#home').slice(1); return VIEWS[h] ? h : 'home'; }
 /* 안드로이드 앱: 알림 창에 오늘의 진행 상황 표시 (앱이 아닌 곳에서는 아무 일도 하지 않음) */
 function syncNotif() {
+  try { if (window.AndroidBridge && AndroidBridge.setLockShow) AndroidBridge.setLockShow(!!S.lockShow); } catch (e) { }
   try {
     if (!window.AndroidBridge || !AndroidBridge.setProgress) return;
     if (S.notifOn === false) return;
@@ -1019,6 +1036,7 @@ function syncNotif() {
       next ? '다음 · ' + next.title : '오늘 기록 보기', longDate(now()), '다음 · ' + ITEMS[0].title);
   } catch (e) { }
 }
+window.permBack = function () { if (route() === 'settings') render(); };
 function render() {
   rollover();
   var r = route(); if (lastRoute !== r) { declEdit = false; editCore = false; }
@@ -1099,6 +1117,8 @@ app.addEventListener('click', function (e) {
   if (act === 'act-start') { var ac = ACTS[id]; if (ac) { runAct = { id: id, end: now() + ac.m * 60000 }; render(); } return; }
   if (act === 'act-stop') { runAct = null; render(); return; }
   if (act === 'act-done') { var gs = S[(ACTS[id] || {}).g || 'mental'], pv = gs.acts[id]; gs.acts[id] = { at: now(), n: (pv ? pv.n : 0) + 1 }; runAct = null; save(); render(); return; }
+  if (act === 'lock-toggle') { S.lockShow = !S.lockShow; save(); try { AndroidBridge.setLockShow(S.lockShow); } catch (er) { } syncNotif(); render(); return; }
+  if (act === 'overlay-open') { try { AndroidBridge.openOverlaySettings(); } catch (er) { } return; }
   if (act === 'notif-toggle') {
     S.notifOn = S.notifOn === false; save();
     try { if (S.notifOn === false) AndroidBridge.clearNotif(); } catch (er) { }
