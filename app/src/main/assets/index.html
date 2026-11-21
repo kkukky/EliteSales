@@ -35,7 +35,7 @@ html,body,.screen{scrollbar-width:none;-ms-overflow-style:none}
 html::-webkit-scrollbar,body::-webkit-scrollbar,.screen::-webkit-scrollbar{display:none;width:0;height:0}
 html,body{margin:0;min-height:100%}
 body{background:var(--stage);color:var(--text);font-family:'Noto Sans KR',-apple-system,'Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;font-size:15px;line-height:1.5;display:flex;align-items:center;justify-content:center;word-break:keep-all;overflow-wrap:break-word}
-.frame{position:relative;width:100%;height:100vh;height:100dvh;background:var(--bg);overflow:hidden;transform:translateZ(0)}
+.frame{container-type:size;position:relative;width:100%;height:100vh;height:100dvh;background:var(--bg);overflow:hidden;transform:translateZ(0)}
 @media (min-width:481px){
   body{padding:24px 0;min-height:100vh}
   .frame{width:360px;height:772px;border-radius:28px;box-shadow:0 0 0 8px #0E0E10,0 24px 60px rgba(0,0,0,.35)}
@@ -48,7 +48,7 @@ button,input{font-family:inherit}
 :focus-visible{outline:2px solid var(--brand-text);outline-offset:2px}
 
 /* 상단 브랜드 줄 */
-.brand{display:flex;align-items:center;justify-content:space-between;min-height:48px;margin-bottom:8px}
+.brand{display:flex;align-items:center;justify-content:space-between;min-height:44px;margin-bottom:6px}
 .logo{display:flex;align-items:center;gap:8px;min-width:0}
 .logo svg.i{width:30px;height:30px;color:var(--brand-text)}
 .logo b{font-size:22px;color:var(--brand-text);letter-spacing:.01em}
@@ -107,6 +107,26 @@ button,input{font-family:inherit}
 .act p{margin:0 0 12px;color:var(--text)}
 .act .timer{font-size:30px;text-align:center;margin:0 0 10px;color:var(--brand-text)}
 .hint{background:var(--soft);border-radius:4px;padding:12px 14px;margin:0 0 12px;font-size:14px;color:var(--sub)}
+.hero.cp{padding:12px 14px 12px;clip-path:polygon(0 0,100% 0,100% calc(100% - 20px),calc(100% - 20px) 100%,0 100%);margin-bottom:0}
+.hero.cp .top{align-items:center;margin-top:2px}.hero.cp h1{font-size:19px;line-height:1.3}.hero.cp .date{font-size:13px}
+.hero.cp .big{font-size:36px}.hero.cp .big small{font-size:18px}.hero.cp .seg{margin:10px 4px 10px}.hero.cp .seg i{height:6px}.hero.cp .btn{min-height:42px;font-size:15px}
+.sub.cs{margin:12px 0 6px;font-size:16px}
+.wk{--rowh:clamp(38px,calc((100cqh - 548px) / 5),58px);background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.wk-r{display:grid;grid-template-columns:90px repeat(7,1fr);align-items:stretch;border-top:1px solid var(--line);min-height:44px;min-height:var(--rowh)}
+.wk-r:first-child{border-top:0}
+.wk-h{min-height:40px}.wk-f{min-height:26px}
+.wk-l{display:flex;align-items:center;padding:0 10px;font-size:12px;font-weight:700;color:var(--sub)}
+.wk-n{display:flex;align-items:center;padding:0 8px 0 10px;color:var(--text);text-decoration:none;font-size:13px;line-height:1.25;font-weight:700;word-break:keep-all}
+.wk-c{display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--sub);font-size:12px;font-weight:700}
+.wk-c.t{background:var(--soft)}
+.wk-d{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;line-height:1.15;color:var(--sub);font-weight:700}
+.wk-d b{font-size:14px;color:var(--text)}.wk-d.t{background:var(--brand);color:#fff}.wk-d.t b{color:#fff}
+.mk{width:24px;height:24px;border-radius:3px;display:grid;place-items:center}
+.mk svg{width:16px;height:16px}
+.mk.ok{background:var(--ok-bg);color:var(--ok)}.mk.late{background:var(--warn-bg);color:var(--warn)}
+.mk.todo{border:2px solid var(--brand)}.mk.none{color:var(--sub);opacity:.6;font-size:13px}
+.wk-f .wk-c.t{color:var(--brand-text)}
+.row.sm{min-height:56px;padding:8px 12px}.row.sm .ib{width:40px;height:40px}
 .tab{position:relative;flex:1;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--sub);text-decoration:none;font-size:13px;font-weight:700}
 .tab[aria-current="page"]{color:var(--brand-text)}
 .tab[aria-current="page"]::before{content:'';position:absolute;top:0;left:50%;width:32px;height:4px;margin-left:-16px;background:var(--brand);transform:skewX(-20deg)}
@@ -405,6 +425,34 @@ var EXTAG = '<span class="ex">예시 데이터입니다</span>';
 
 /* ---------- 화면 ---------- */
 var VIEWS = {};
+function weekDays() {
+  var p = S.date.split('-'), d = new Date(+p[0], +p[1] - 1, +p[2]), off = (d.getDay() + 6) % 7, out = [], i, x;
+  for (i = 0; i < 7; i++) { x = new Date(d.getFullYear(), d.getMonth(), d.getDate() - off + i); out.push({ d: dstr(x.getTime()), wd: WD[x.getDay()], n: x.getDate() }); }
+  return out;
+}
+function weekTable() {
+  var days = weekDays(), by = {};
+  logRecords().forEach(function (r) { by[r.d] = r; });
+  var head = '<div class="wk-r wk-h" role="row"><span class="wk-l">이번 주</span>' + days.map(function (x) {
+    return '<span class="wk-d' + (x.d === S.date ? ' t' : '') + '" role="columnheader"><i>' + x.wd + '</i><b>' + x.n + '</b></span>';
+  }).join('') + '</div>';
+  var rows = SALES.map(function (it, ri) {
+    var idx = ITEMS.indexOf(it);
+    return '<div class="wk-r" role="row"><a class="wk-n" href="#' + it.id + '">' + it.title + '</a>' + days.map(function (x) {
+      var t = x.d === S.date, r = by[x.d], inner;
+      if (x.d > S.date) inner = '<span class="mk none">·</span>';
+      else if (r && r.cells[idx]) inner = '<span class="mk ' + (it.id === 'attend' && r.late ? 'late' : 'ok') + '" title="' + (it.id === 'attend' && r.late ? '지각' : '완료') + '">' + ic('check') + '</span>';
+      else inner = t ? '<span class="mk todo"></span>' : '<span class="mk none">–</span>';
+      return t ? '<a class="wk-c t" role="cell" href="#' + it.id + '" aria-label="' + it.title + (r && r.cells[idx] ? ' 완료' : ' 하러 가기') + '">' + inner + '</a>' : '<span class="wk-c" role="cell">' + inner + '</span>';
+    }).join('') + '</div>';
+  }).join('');
+  var foot = '<div class="wk-r wk-f" role="row"><span class="wk-l">완료</span>' + days.map(function (x) {
+    var r = by[x.d], c = 0;
+    if (r) SALES.forEach(function (it) { if (r.cells[ITEMS.indexOf(it)]) c++; });
+    return '<span class="wk-c' + (x.d === S.date ? ' t' : '') + '" role="cell">' + (x.d > S.date || !r ? '' : c + '/' + SALES.length) + '</span>';
+  }).join('') + '</div>';
+  return '<div class="wk" role="table" aria-label="이번 주 영업루틴 체크표">' + head + rows + foot + '</div>';
+}
 VIEWS.home = function () {
   var n = doneCount(), total = ITEMS.length;
   var next = ITEMS.filter(function (i) { return !S.done[i.id]; })[0];
@@ -417,14 +465,14 @@ VIEWS.home = function () {
     return '<a class="row" href="#' + i.id + '"><span class="ib ' + (d ? 'done' : '') + '">' + ic(d ? 'check' : i.icon) + '</span>' +
       '<span class="rt"><b>' + i.title + '</b><span>' + summary(i.id) + '</span></span>' + chipFor(i.id) + ic('chev-r', 'chev') + '</a>';
   };
-  var rows = SALES.map(rowOf).join(''), mrows = MENTAL.map(rowOf).join('');
+  var mrows = MENTAL.map(rowOf).join('').replace(/class="row"/g, 'class="row sm"');
   return '<div class="screen">' + brandRow() +
-    '<section class="hero" aria-label="오늘의 진행"><div class="date">' + longDate(now()) + '</div>' +
-    '<div class="top"><h1 class="h">' + (n === total ? '오늘 루틴을<br>모두 마쳤어요' : '오늘의 루틴을<br>점검해요') + '</h1><div class="big h"><span data-n>' + n + '</span><small>/' + total + '</small></div></div>' +
+    '<section class="hero cp" aria-label="오늘의 진행"><div class="date">' + longDate(now()) + '</div>' +
+    '<div class="top"><h1 class="h">' + (n === total ? '오늘 루틴을 모두 마쳤어요' : '오늘의 루틴을 점검해요') + '</h1><div class="big h"><span data-n>' + n + '</span><small>/' + total + '</small></div></div>' +
     '<div class="seg" role="img" aria-label="' + total + '개 중 ' + n + '개 완료">' + seg + '</div>' + cta + '</section>' +
-    '<h2 class="sub">오늘의 영업루틴</h2><div class="list">' + rows + '</div>' +
-    '<h2 class="sub">오늘의 멘탈루틴</h2><div class="list">' + mrows + '</div>' +
-    (anySample() ? '<p class="note">' + EXTAG + ' 교육 일정, 목표, 고객, 할 일 일부는 예시예요. 직접 고치면 내 데이터가 돼요.</p>' : '') +
+    '<h2 class="sub cs">오늘의 영업루틴</h2>' + weekTable() +
+    '<h2 class="sub cs">오늘의 멘탈루틴</h2><div class="list">' + mrows + '</div>' +
+    (anySample() ? '<p class="note" style="font-size:13px">' + EXTAG + ' 교육 일정, 목표, 고객, 할 일 일부는 예시예요. 직접 고치면 내 데이터가 돼요.</p>' : '') +
     '</div>' + tabbar('home');
 };
 VIEWS.attend = function () {
