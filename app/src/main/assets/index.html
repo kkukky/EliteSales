@@ -126,6 +126,10 @@ button,input{font-family:inherit}
 .mk.ok{background:var(--ok-bg);color:var(--ok)}.mk.late{background:var(--warn-bg);color:var(--warn)}
 .mk.todo{border:2px solid var(--brand)}.mk.none{color:var(--sub);opacity:.6;font-size:13px}
 .wk-f .wk-c.t{color:var(--brand-text)}
+.wk.mt .wk-r{min-height:36px}
+.mk.sc{font-size:14px;font-weight:800;border-radius:4px;width:26px;height:26px}
+.mk.sc.s1,.mk.sc.s2{background:var(--bad-bg);color:var(--bad)}.mk.sc.s3{background:var(--warn-bg);color:var(--warn)}.mk.sc.s4,.mk.sc.s5{background:var(--ok-bg);color:var(--ok)}
+.mk.sc.todo{width:22px;height:22px}
 .row.sm{min-height:56px;padding:8px 12px}.row.sm .rt>span{font-size:14px}.row.sm .ib{width:40px;height:40px}
 .decl{position:relative;margin:8px 0 0;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:6px;padding:12px 14px 10px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
 .decl p{margin:0 0 8px;font-size:15px;line-height:1.5;font-weight:700;word-break:keep-all;white-space:pre-line}
@@ -497,6 +501,25 @@ function weekTable() {
   }).join('') + '</div>';
   return '<div class="wk" role="table" aria-label="이번 주 영업루틴 체크표">' + head + rows + foot + '</div>';
 }
+var MROWS = [['emo', '감정', 'mental'], ['body', '몸 상태', 'mental'], ['dir', '방향성', 'focus'], ['imm', '몰입도', 'focus']];
+function mScore(r, k) {
+  var d = r && r.det; if (!d) return 0;
+  return (k === 'emo' || k === 'body') ? (d.m ? +d.m[k] || 0 : 0) : (d.f ? +d.f[k] || 0 : 0);
+}
+function mentalTable() {
+  var days = weekDays(), by = {};
+  logRecords().forEach(function (r) { by[r.d] = r; });
+  var rows = MROWS.map(function (m) {
+    return '<div class="wk-r" role="row"><a class="wk-n" href="#' + m[2] + '">' + m[1] + '</a>' + days.map(function (x) {
+      var t = x.d === S.date, v = mScore(by[x.d], m[0]), inner;
+      if (x.d > S.date) inner = '<span class="mk none">·</span>';
+      else if (v) inner = '<span class="mk sc s' + v + '" title="' + m[1] + ' ' + v + '점">' + v + '</span>';
+      else inner = t ? '<span class="mk sc todo"></span>' : '<span class="mk none">–</span>';
+      return t ? '<a class="wk-c t" role="cell" href="#' + m[2] + '" aria-label="' + m[1] + (v ? ' ' + v + '점' : ' 기록하러 가기') + '">' + inner + '</a>' : '<span class="wk-c" role="cell">' + inner + '</span>';
+    }).join('') + '</div>';
+  }).join('');
+  return '<div class="wk mt" role="table" aria-label="이번 주 멘탈루틴 점수표">' + rows + '</div>';
+}
 VIEWS.home = function () {
   var n = doneCount(), total = ITEMS.length;
   var next = ITEMS.filter(function (i) { return !S.done[i.id]; })[0];
@@ -509,13 +532,12 @@ VIEWS.home = function () {
     return '<a class="row" href="#' + i.id + '"><span class="ib ' + (d ? 'done' : '') + '">' + ic(d ? 'check' : i.icon) + '</span>' +
       '<span class="rt"><b>' + i.title + '</b><span>' + summary(i.id) + '</span></span>' + chipFor(i.id) + ic('chev-r', 'chev') + '</a>';
   };
-  var mrows = MENTAL.map(rowOf).join('').replace(/class="row"/g, 'class="row sm"');
   return '<div class="screen">' + brandRow() +
     '<section class="hero cp" aria-label="오늘의 진행"><div class="date">' + longDate(now()) + '</div>' +
     '<div class="top"><h1 class="h">' + (n === total ? '오늘 루틴을 모두 마쳤어요' : '오늘의 루틴을 점검해요') + '</h1><div class="big h"><span data-n>' + n + '</span><small>/' + total + '</small></div></div>' +
     '<div class="seg" role="img" aria-label="' + total + '개 중 ' + n + '개 완료">' + seg + '</div>' + cta + '</section>' +
     declBlock() + '<h2 class="sub cs">오늘의 영업루틴</h2>' + weekTable() +
-    '<h2 class="sub cs">오늘의 멘탈루틴</h2><div class="list">' + mrows + '</div>' +
+    '<h2 class="sub cs">오늘의 멘탈루틴</h2>' + mentalTable() +
     (anySample() ? '<p class="note" style="font-size:13px">' + EXTAG + ' 교육 일정, 목표, 고객, 할 일 일부는 예시예요. 직접 고치면 내 데이터가 돼요.</p>' : '') +
     '</div>' + tabbar('home') + declModal();
 };
