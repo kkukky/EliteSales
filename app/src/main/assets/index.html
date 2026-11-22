@@ -1355,8 +1355,8 @@ function noticeBar() {
   if (!saveIssue || noticeOff) return '';
   var msg = { nodir: '데이터를 저장할 폴더가 아직 정해지지 않았어요. 폴더를 고르면 기록을 엑셀 파일로 보관해요.',
     nofile: '저장해 오던 엑셀 파일(' + FS_FILE + ')을 폴더에서 찾을 수 없어요. 폴더를 다시 선택해 주세요.',
-    perm: '저장 폴더에 접근하려면 확인이 필요해요. 설정에서 저장 버튼을 눌러 허용해 주세요.' }[saveIssue];
-  return '<div class="alertbar" role="alert"><p>' + msg + '</p><button class="btn xs" data-act="goto-pick"><span>' + (saveIssue === 'perm' ? '설정으로' : '폴더 선택') + '</span></button><button class="ib2" data-act="notice-x" aria-label="알림 닫기">' + ic('x') + '</button></div>';
+    perm: '저장 폴더에 접근하려면 확인이 필요해요. 폴더를 다시 선택해 주세요.' }[saveIssue];
+  return '<div class="alertbar" role="alert"><p>' + msg + '</p><button class="btn xs" data-act="goto-pick"><span>' + '폴더 선택' + '</span></button><button class="ib2" data-act="notice-x" aria-label="알림 닫기">' + ic('x') + '</button></div>';
 }
 var FS_FILE = 'ELITE_루틴기록.xlsx';
 var dirH = null, dirPerm = '', autoTimer = null;
@@ -1423,9 +1423,8 @@ VIEWS.settings = function () {
     kv('저장 파일', !fsOK() ? '해당 없음' : (saveIssue === 'nodir' ? '<span class="late">폴더 없음</span>' : (saveIssue === 'nofile' ? '<span class="late">파일 없음</span>' : (saveIssue === 'perm' ? '<span class="late">확인 필요</span>' : '<span class="ok">있음</span>')))) + kv('파일 이름', dirH ? '<code>' + FS_FILE + '</code>' : '<code>ELITE_루틴기록_날짜.xlsx</code>') + kv('마지막 저장', ex) +
     (dirH ? '<div class="swr"><b>기록이 바뀌면 자동 저장</b><button class="sw" role="switch" aria-checked="' + !!S.autoSave + '" aria-label="기록이 바뀌면 자동 저장" data-act="auto-toggle"></button></div>' +
       '<p class="note" style="margin:4px 0 0">켜면 기록을 바꾼 뒤 몇 초 지나 같은 파일에 덮어써요. 브라우저를 다시 열면 폴더 접근을 한 번 더 허용해야 할 수 있어요.</p>' : '') +
-    '<div style="margin-top:12px"><button class="btn" data-act="export-xlsx">' + ic('dl') + '<span>' + (dirH ? '선택한 폴더에 엑셀로 저장' : '엑셀로 내보내기') + '</span></button></div>' +
     '<div style="margin-top:8px;display:grid;grid-template-columns:' + (dirH ? '1fr 1fr' : '1fr') + ';gap:8px"><button class="btn ghost" data-act="dir-pick"><span>' + (dirH ? '폴더 변경' : '저장 폴더 선택') + '</span></button>' + (dirH ? '<button class="btn ghost" data-act="dir-clear"><span>폴더 해제</span></button>' : '') + '</div>' +
-    (!fsOK() ? '<p class="note" style="margin-top:10px">' + (window.AndroidBridge ? '이 앱 버전에서는 폴더를 고를 수 없어요. 파일은 휴대폰의 \'다운로드\' 폴더에 저장돼요. 앱을 최신 버전으로 업데이트해 주세요.' : '이 브라우저(또는 이 화면)에서는 폴더를 직접 고를 수 없어요. 저장하면 브라우저의 다운로드 폴더로 받아져요. 폴더 선택은 PC의 크롬·엣지에서 이 앱을 새 탭으로 열면 쓸 수 있어요.') + '</p>' : (AND ? '<p class="note" style="margin-top:10px">폴더 선택 창은 기본으로 문서(Documents) 폴더에서 열려요. 폴더를 고른 뒤 아래쪽 [이 폴더 사용]을 누르세요. 휴대폰 저장소 맨 위나 다운로드 폴더 자체는 선택할 수 없어서, 문서 안에 새 폴더(예: ELITE 기록)를 만들어 선택해 주세요.</p>' : '<p class="note" style="margin-top:10px">폴더 선택 창은 기본으로 문서(Documents) 폴더에서 열려요. 문서 폴더 자체는 브라우저가 막을 수 있어서, 그 안에 새 폴더(예: ELITE 기록)를 만들어 선택해 주세요.</p>')) +
+    (!fsOK() ? '<p class="note" style="margin-top:10px">' + (window.AndroidBridge ? '이 앱 버전에서는 폴더를 고를 수 없어요. 앱을 최신 버전으로 업데이트해 주세요.' : '이 브라우저(또는 이 화면)에서는 폴더를 고를 수 없어요. 폴더 선택은 PC의 크롬·엣지에서 이 앱을 새 탭으로 열면 쓸 수 있어요.') + '</p>' : (AND ? '<p class="note" style="margin-top:10px">폴더 선택 창은 기본으로 문서(Documents) 폴더에서 열려요. 폴더를 고른 뒤 아래쪽 [이 폴더 사용]을 누르세요. 휴대폰 저장소 맨 위나 다운로드 폴더 자체는 선택할 수 없어서, 문서 안에 새 폴더(예: ELITE 기록)를 만들어 선택해 주세요.</p>' : '<p class="note" style="margin-top:10px">폴더 선택 창은 기본으로 문서(Documents) 폴더에서 열려요. 문서 폴더 자체는 브라우저가 막을 수 있어서, 그 안에 새 폴더(예: ELITE 기록)를 만들어 선택해 주세요.</p>')) +
     (exportMsg ? '<p class="note" style="margin-top:10px">' + exportMsg + '</p>' : '') +
     (exportFail ? '<p class="note" style="margin-top:10px;color:var(--brand-text)">파일을 만들지 못했어요. 다시 시도해 주세요.</p>' : '') +
     (weekWarn ? '<p class="note" style="margin-top:10px">일주일에 한 번 정도 파일로 저장해 두면 안전해요.</p>' : '') +
@@ -1596,7 +1595,7 @@ function syncNotif() {
 window.permBack = function () { if (route() === 'settings') render(); };
 function render() {
   rollover();
-  var r = route(); if (lastRoute !== r && r === 'settings' && saveIssue && !noticeOff && !focusPick) focusPick = saveIssue === 'perm' ? 'export-xlsx' : 'dir-pick';
+  var r = route(); if (lastRoute !== r && r === 'settings' && saveIssue && !noticeOff && !focusPick) focusPick = 'dir-pick';
   if (lastRoute !== r) { declEdit = false; editCore = false; pEdit = null; pDel = false; logDay = null; logItem = null; }
   var _r = r, sc = app.querySelector('.screen');
   var top = (sc && lastRoute === r) ? sc.scrollTop : 0;
@@ -1637,7 +1636,7 @@ app.addEventListener('click', function (e) {
     S.answer = { v: el.getAttribute('data-v'), at: now() }; save(); render(); return;
   }
   if (act === 'notice-x') { noticeOff = true; render(); return; }
-  if (act === 'goto-pick') { focusPick = saveIssue === 'perm' ? 'export-xlsx' : 'dir-pick'; if (route() === 'settings') render(); else location.hash = '#settings'; return; }
+  if (act === 'goto-pick') { focusPick = 'dir-pick'; if (route() === 'settings') render(); else location.hash = '#settings'; return; }
   if (act === 'dir-pick' && AND) {
     window.onFolderPicked = function (ok) {
       if (!ok) { render(); return; }
