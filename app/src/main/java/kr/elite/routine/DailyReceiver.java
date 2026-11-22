@@ -5,5 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 
 public class DailyReceiver extends BroadcastReceiver {
-    @Override public void onReceive(Context c, Intent i) { Notifs.resetIfNewDay(c); }
+    @Override public void onReceive(Context c, Intent i) {
+        if (i != null && Notifs.ACT_DISMISSED.equals(i.getAction())) { Notifs.repost(c); return; }
+        Notifs.resetIfNewDay(c);
+    }
 }
