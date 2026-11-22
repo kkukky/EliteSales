@@ -111,6 +111,10 @@ button,input{font-family:inherit}
 .hero.cp .top{align-items:center;margin-top:2px}.hero.cp h1{font-size:19px;line-height:1.3}.hero.cp .date{font-size:13px}
 .hero.cp .big{font-size:36px}.hero.cp .big small{font-size:18px}.hero.cp .seg{margin:10px 4px 10px}.hero.cp .seg i{height:6px}.hero.cp .btn{min-height:42px;font-size:15px}
 .sub.cs{margin:12px 0 6px;font-size:16px}
+.shb{flex:1;min-width:0;display:flex;align-items:center;gap:8px;margin:0;padding:6px 0;background:none;border:0;color:inherit;font:inherit;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.shb .chip{min-height:24px;padding:0 8px;font-size:12px;margin-left:2px}
+.shb .cv{margin-left:auto;width:18px;height:18px;color:var(--sub);transition:transform .15s}
+.shb[aria-expanded="true"] .cv{transform:rotate(90deg)}
 .wk{--rowh:clamp(40px,calc((100cqh - 680px) / 5),58px);background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .wk-r{display:grid;grid-template-columns:104px repeat(5,1fr);align-items:stretch;border-top:1px solid var(--line);min-height:44px;min-height:var(--rowh)}
 .wk-r:first-child{border-top:0}
@@ -127,7 +131,7 @@ button,input{font-family:inherit}
 .mk.todo{border:2px solid var(--brand)}.mk.none{color:var(--sub);opacity:.6;font-size:13px}
 .wk-f .wk-c.t{color:var(--brand-text)}
 .wk.mt .wk-r{min-height:36px}
-.mk.sc{font-size:14px;font-weight:800;border-radius:4px;width:26px;height:26px}
+.mk.sc{font-size:14px;font-weight:800;border-radius:4px;width:34px;height:26px}
 .mk.sc.s1,.mk.sc.s2{background:var(--bad-bg);color:var(--bad)}.mk.sc.s3{background:var(--warn-bg);color:var(--warn)}.mk.sc.s4,.mk.sc.s5{background:var(--ok-bg);color:var(--ok)}
 .mk.sc.todo{width:22px;height:22px}
 .swr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0}
@@ -135,6 +139,23 @@ button,input{font-family:inherit}
 .sw{position:relative;flex:none;width:52px;height:30px;border:0;border-radius:15px;background:var(--line);cursor:pointer;transition:background .15s}
 .sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35);transition:transform .15s}
 .sw[aria-checked="true"]{background:var(--brand)}.sw[aria-checked="true"]::after{transform:translateX(22px)}
+.sh{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.sh .sub{margin-bottom:6px}
+.btn.xs{margin-left:auto;min-height:34px;padding:0 12px;font-size:13px;width:auto;gap:4px}.btn.xs .i{width:16px;height:16px}
+.pr{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px;margin-bottom:8px}
+.pr-h{display:flex;align-items:center;gap:8px}.pr-h b{flex:1;min-width:0;font-size:15px;word-break:keep-all}
+.pr-h .chip{min-height:22px;padding:0 7px;font-size:11px}
+.pr-h .ib2{flex:none;width:34px;height:34px;border:0;border-radius:4px;background:var(--soft);color:var(--sub);display:grid;place-items:center;cursor:pointer}
+.pr-h .ib2 svg{width:18px;height:18px}
+.pr .tg{width:100%;min-height:46px;margin-top:10px;border:1px solid var(--line);border-radius:4px;background:var(--soft);color:var(--text);font:700 15px inherit;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.pr .tg[aria-pressed="true"]{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.pr .tg svg{width:18px;height:18px}
+.pr .score button{min-height:46px}.pr .score button b{font-size:19px}
+.pr-w{display:grid;grid-template-columns:repeat(5,1fr);margin-top:10px;border-top:1px solid var(--line);padding-top:8px}
+.pr-w>div{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--sub);padding:4px 0;border-radius:3px}
+.pr-w>div.t{background:var(--soft)}.pr-w>div.t i{color:var(--brand-text)}.pr-w i{font-style:normal}
+.pe{padding:18px 12px;text-align:center;background:var(--card);border:1px dashed var(--line);border-radius:6px;color:var(--sub);font-size:14px;line-height:1.5}
+.sheet input.pn{width:100%;box-sizing:border-box}
 .row.sm{min-height:56px;padding:8px 12px}.row.sm .rt>span{font-size:14px}.row.sm .ib{width:40px;height:40px}
 .decl{position:relative;margin:8px 0 0;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:6px;padding:12px 14px 10px;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
 .decl p{margin:0 0 8px;font-size:15px;line-height:1.5;font-weight:700;word-break:keep-all;white-space:pre-line}
@@ -220,6 +241,55 @@ input[type=text],input[type=time]{min-height:44px;font-size:16px;border:1px soli
 .lr .lv{flex:1;min-width:0}
 .pt{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 10px}
 .seg3{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.alertbar{display:flex;align-items:center;gap:8px;background:var(--warn-bg);border:1px solid var(--warn);border-radius:6px;padding:10px 10px 10px 12px;margin:0 0 10px;font-size:13px;line-height:1.4}
+.alertbar p{margin:0;flex:1;font-weight:700;color:var(--text)}
+.alertbar .ib2{flex:none;width:30px;height:30px;border:0;background:none;color:var(--sub);display:grid;place-items:center;cursor:pointer}.alertbar .ib2 svg{width:16px;height:16px}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(150,3,3,.55)}50%{box-shadow:0 0 0 8px rgba(150,3,3,0)}}
+.pulse{animation:pulse 1.1s ease-out 3}
+.seg3.t3{grid-template-columns:repeat(3,1fr)}.seg3.t3 button{min-height:46px}
+.bigrate{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.bigrate b{font-size:40px;line-height:1.1}.bigrate span{font-size:13px;font-weight:700;color:var(--sub)}
+.dup{color:var(--ok);font-weight:800}.ddn{color:var(--bad);font-weight:800}
+.wbars{display:flex;align-items:flex-end;gap:6px;height:100px;margin-top:8px;padding-top:6px}
+.wb{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px;height:100%}
+.wb i{display:block;width:100%;max-width:26px;border-radius:3px 3px 0 0}.wb i.ok{background:var(--ok)}.wb i.warn{background:var(--warn)}.wb i.bad{background:var(--bad)}
+.wbv{font-size:10px;font-weight:800;color:var(--sub)}.wbl{font-size:10px;color:var(--sub);font-weight:700;white-space:nowrap}
+.wcard,.icard{display:block;width:100%;text-align:left;font-family:inherit;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px;margin-bottom:8px;cursor:pointer}
+.wcard{border-left:4px solid var(--brand)}
+.wh,.ih{display:flex;align-items:center;gap:8px}.wh b,.ih b{flex:1;min-width:0;font-size:15px}
+.wn{flex:none;width:22px;height:22px;border-radius:50%;background:var(--brand);color:#fff;font-size:12px;font-weight:800;display:grid;place-items:center}
+.wr{margin:8px 0 0;font-size:13px;color:var(--bad);font-weight:700}.wt{margin:4px 0 0;font-size:13px;color:var(--sub);line-height:1.4}
+.im{display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:12px;font-weight:700;color:var(--sub)}
+.icard .track{margin-top:8px}
+.mdots{display:inline-flex;gap:4px}.mdots i{width:12px;height:12px;border-radius:3px;display:inline-block}.mdots i.ok{background:var(--ok)}.mdots i.no{background:var(--bad-bg);border:1px solid var(--bad)}
+.wdr{display:grid;grid-template-columns:24px 1fr 44px;gap:8px;align-items:center;margin:8px 0;font-size:13px;font-weight:700}.wdr b{text-align:right}.wdr .track{margin:0}
+.seg3.r3{grid-template-columns:repeat(3,1fr);margin-top:-4px}.seg3.r3 button{min-height:38px;font-size:14px}
+.gx{overflow-x:auto;overscroll-behavior-x:contain;background:var(--card);border:1px solid var(--line);border-radius:6px;margin-bottom:8px;scrollbar-width:thin}
+.gx-in{display:inline-block;min-width:100%}
+.gx-r{display:flex;align-items:stretch;min-height:46px;border-top:1px solid var(--line)}
+.gx-r.gx-m{border-top:0;min-height:18px}.gx-r.gx-h{min-height:42px;border-top:0}.gx-r.gx-f{min-height:30px;background:var(--soft)}
+.gx-n{position:sticky;left:0;z-index:2;flex:none;width:96px;box-sizing:border-box;padding:0 8px 0 10px;background:var(--card);display:flex;flex-direction:column;justify-content:center;gap:1px;font-size:12px;font-weight:700;color:var(--text);border-right:1px solid var(--line);word-break:keep-all}
+.gx-f .gx-n{background:var(--soft)}
+.gx-n b{font-size:12px;line-height:1.2}.gx-n small{font-size:10px;color:var(--sub);font-weight:700}
+.gx-c{flex:none;width:30px;display:flex;align-items:center;justify-content:center;flex-direction:column;font-size:11px;font-weight:700;color:var(--sub);position:relative}
+.gx-c.we{width:8px;background:var(--soft);opacity:.7}
+.gx-c.t{background:var(--soft)}.gx-h .gx-c.t{background:var(--brand);color:#fff}.gx-h .gx-c.t b{color:#fff}
+.gx-h .gx-c.we.t{background:var(--soft)}
+.gx-c i{font-style:normal;font-size:10px;line-height:1.15}.gx-c b{font-size:13px;color:var(--text);line-height:1.15}
+.gx-c em{position:absolute;left:2px;top:2px;font-style:normal;font-size:10px;color:var(--brand-text);white-space:nowrap}
+.gx .mk{width:22px;height:22px}.gx .mk svg{width:14px;height:14px}.gx .mk.sc{width:22px;height:22px;font-size:12px}
+.gk{background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-bottom:12px}
+.gk .wk-r{min-height:44px}.gk .wk-h{min-height:40px}.gk .wk-n{font-size:12px;padding:0 6px 0 10px}.gk .wk-d b{font-size:13px}
+.gk .wk-d.we{color:var(--bad-text,var(--brand-text))}
+.gk .mk{width:22px;height:22px}.gk .mk svg{width:14px;height:14px}.gk .mk.sc{width:22px;height:22px;font-size:12px}
+.gh{padding:10px 12px 12px;background:var(--card);border:1px solid var(--line);border-radius:6px;margin-bottom:8px}
+.gh-t{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.gh-t b{font-size:14px}.gh-t span{font-size:12px;color:var(--sub);font-weight:700}
+.dots{display:grid;grid-template-columns:repeat(auto-fill,17px);gap:4px;margin-top:8px}
+.dt{width:17px;height:17px;border-radius:3px;border:1px solid transparent;display:grid;place-items:center;font-size:10px;font-weight:800;line-height:1}
+.dt.ok{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}.dt.late{background:var(--warn-bg);border-color:var(--warn);color:var(--warn)}
+.dt.no{background:var(--bad-bg);border-color:transparent}.dt.none{border:1px dashed var(--line)}.dt.todo{border:2px solid var(--brand)}
+.dt.s1,.dt.s2{background:var(--bad-bg);color:var(--bad)}.dt.s3{background:var(--warn-bg);color:var(--warn)}.dt.s4,.dt.s5{background:var(--ok-bg);color:var(--ok)}
+.lg{display:flex;flex-wrap:wrap;gap:10px;font-size:12px;color:var(--sub);font-weight:700;margin:2px 2px 10px}.lg i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:4px;border:1px solid transparent}
+.lg .ok{background:var(--ok-bg);border-color:var(--ok)}.lg .late{background:var(--warn-bg);border-color:var(--warn)}.lg .no{background:var(--bad-bg)}.lg .none{border:1px dashed var(--line)}
 .seg3 button{min-height:44px;border:0;border-radius:4px;background:var(--soft);color:var(--text);font-size:15px;font-weight:700;cursor:pointer;padding:0 4px}
 .seg3 button[aria-pressed="true"]{background:var(--brand);color:#fff}
 .cap{color:var(--sub);font-size:14px;margin:0 2px 10px}
@@ -300,7 +370,8 @@ var ITEMS = [
   { id: 'goal', title: '목표와 진행 상황', icon: 'target' },
   { id: 'clients', title: '진행 고객 현황', icon: 'users' },
   { id: 'mental', title: '멘탈 관리', icon: 'heart' },
-  { id: 'focus', title: '집중 관리', icon: 'target' }
+  { id: 'focus', title: '집중 관리', icon: 'target' },
+  { id: 'self', title: '내면 대화', icon: 'heart' }
 ];
 var LEAD = {
   attend: '출근한 시각을 기록해요. 기준 시각 이후는 지각으로 표시돼요.',
@@ -309,7 +380,8 @@ var LEAD = {
   goal: '이번 달 목표와 현재 진행 상황을 확인하고 고쳐요.',
   clients: '진행 중인 고객의 준비와 진행 정도를 확인해요.',
   mental: '오늘의 감정과 몸 상태를 점수로 남기고, 지금 상태에 맞는 행동을 바로 해봐요.',
-  focus: '가장 중요한 목표를 향하고 있는지, 얼마나 몰입하고 있는지 점수로 확인해요.'
+  focus: '가장 중요한 목표를 향하고 있는지, 얼마나 몰입하고 있는지 점수로 확인해요.',
+  self: '결과가 아니라 애쓴 나를 인정해요. 오늘 나에게 어떤 말을 해 줬는지 점수로 돌아봐요.'
 };
 var BTN = {
   attend: '지금 출근 기록하기',
@@ -318,7 +390,8 @@ var BTN = {
   goal: '진행 상황 점검 완료',
   clients: '고객 현황 확인 완료',
   mental: '멘탈 관리 완료',
-  focus: '집중 관리 완료'
+  focus: '집중 관리 완료',
+  self: '내면 대화 완료'
 };
 var STAGES = ['준비', '상담', '제안', '계약'];
 /* 예시 데이터 */
@@ -350,7 +423,7 @@ function isLate(t) { var d = new Date(t); d.setHours(WORK_START_H, 0, 0, 0); ret
 /* ---------- 저장소: 모든 읽기와 쓰기는 try/catch ---------- */
 function defaults() {
   return {
-    v: 1, date: dstr(now()), done: {}, planDone: {}, answer: null, history: {}, mental: { emo: 0, body: 0, acts: {} }, focus: newFocus(), decl: { text: DECL_DEFAULT, today: 0, total: 0 }, coreGoal: '', hideSampleLog: false, logView: 'day',
+    v: 1, date: dstr(now()), done: {}, planDone: {}, answer: null, history: {}, mental: { emo: 0, body: 0, acts: {} }, focus: newFocus(), decl: { text: DECL_DEFAULT, today: 0, total: 0 }, coreGoal: '', self: { eff: 0, kind: 0, line: '', acts: {} }, mine: [], mineV: {}, hideSampleLog: false, logView: 'sum', logRange: 7,
     plan: [
       { id: 'p1', title: '오전 고객 전화', time: '09:30', sample: true },
       { id: 'p2', title: '제안서 점검', time: '11:00', sample: true },
@@ -380,7 +453,8 @@ function normFocus(f) {
   if (!f.slots) { f.slots = b.slots; if (f.dir && f.imm) f.slots[new Date().getHours() < 13 ? 'am' : 'pm'] = { dir: f.dir, imm: f.imm }; }
   return f;
 }
-function save() { try { S.savedAt = now(); localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* 저장이 막혀도 화면은 계속 동작 */ } }
+var skipAuto = false;
+function save() { try { S.savedAt = now(); localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* 저장이 막혀도 화면은 계속 동작 */ } if (!skipAuto && S.autoSave && typeof schedAuto === 'function') schedAuto(); }
 var S = (function () {
   var d = defaults(), o = load();
   if (!o) return d;
@@ -392,12 +466,19 @@ var S = (function () {
   m.focus = normFocus(m.focus);
   if (!m.decl || typeof m.decl !== 'object') m.decl = { text: DECL_DEFAULT, today: 0, total: 0 };
   if (typeof m.coreGoal !== 'string') m.coreGoal = '';
+  if (!m.self || typeof m.self !== 'object') m.self = { eff: 0, kind: 0, line: '', acts: {} };
+  if (!m.self.acts) m.self.acts = {};
+  if (typeof m.self.line !== 'string') m.self.line = '';
+  if (!m.logRange) m.logRange = 7;
+  if (['sum', 'grid', 'items'].indexOf(m.logView) < 0) m.logView = 'sum';
+  if (!Array.isArray(m.mine)) m.mine = [];
+  if (!m.mineV || typeof m.mineV !== 'object') m.mineV = {};
   if (typeof m.date !== 'string') m.date = dstr(now());
   return m;
 })();
 
-var runAct = null;   // 실행 중인 행동 {id,end}
-var MENTAL_IDS = ['mental', 'focus'];   // 멘탈 루틴 항목(앞으로 추가)
+var runAct = null, pEdit = null, pType = 'check', pName = '', pDel = false;   // 실행 중인 행동 {id,end}
+var MENTAL_IDS = ['mental', 'focus', 'self'];   // 멘탈 루틴 항목(앞으로 추가)
 var SALES = ITEMS.filter(function (i) { return MENTAL_IDS.indexOf(i.id) < 0; }), MENTAL = ITEMS.filter(function (i) { return MENTAL_IDS.indexOf(i.id) >= 0; });
 function doneCount() { return ITEMS.filter(function (i) { return S.done[i.id]; }).length; }
 function details() {
@@ -405,16 +486,19 @@ function details() {
   return { ans: S.answer ? S.answer.v : '', pd: S.plan.filter(function (p) { return S.planDone[p.id]; }).length, pt: S.plan.length,
     g: g ? { name: g.name, cur: g.cur, target: g.target, unit: g.unit } : null, cn: S.clients.length, ck: S.clients.filter(function (c) { return c.stage >= 3; }).length,
     m: { emo: S.mental.emo, body: S.mental.body, acts: Object.keys(S.mental.acts).length }, f: { dir: S.focus.dir, imm: S.focus.imm, am: [S.focus.slots.am.dir, S.focus.slots.am.imm], pm: [S.focus.slots.pm.dir, S.focus.slots.pm.imm],
-      why: Object.keys(S.focus.why).filter(function (k) { return S.focus.why[k]; }), one: S.focus.one.text, od: !!S.focus.one.done, acts: Object.keys(S.focus.acts).length }, dc: S.decl.today };
+      why: Object.keys(S.focus.why).filter(function (k) { return S.focus.why[k]; }), one: S.focus.one.text, od: !!S.focus.one.done, acts: Object.keys(S.focus.acts).length }, dc: S.decl.today,
+    s: { eff: S.self.eff, kind: S.self.kind, line: S.self.line, acts: Object.keys(S.self.acts).length },
+    p: S.mine.map(function (m) { return { id: m.id, n: m.name, t: m.type, v: S.mineV[m.id] || 0 }; }) };
 }
 function rollover() {
   var t = dstr(now());
   if (S.date === t) return false;
   var n = doneCount(), a = S.done.attend;
-  if (n > 0) S.history[S.date] = { n: n, cells: ITEMS.map(function (i) { return S.done[i.id] ? 1 : 0; }), at: a ? a.at : null, late: a ? !!a.late : false, det: details() };
+  var anyP = S.mine.some(function (m) { return S.mineV[m.id]; });
+  if (n > 0 || anyP) S.history[S.date] = { n: n, cells: ITEMS.map(function (i) { return S.done[i.id] ? 1 : 0; }), at: a ? a.at : null, late: a ? !!a.late : false, det: details() };
   var keys = Object.keys(S.history).sort();
-  while (keys.length > 60) delete S.history[keys.shift()];
-  S.date = t; S.done = {}; S.planDone = {}; S.answer = null; S.mental = { emo: 0, body: 0, acts: {} }; S.focus = newFocus(); S.decl.today = 0; runAct = null; declEdit = false;   // 목표, 고객, 일정 목록은 유지
+  while (keys.length > 100) delete S.history[keys.shift()];
+  S.date = t; S.done = {}; S.planDone = {}; S.answer = null; S.mental = { emo: 0, body: 0, acts: {} }; S.focus = newFocus(); S.self = { eff: 0, kind: 0, line: '', acts: {} }; S.decl.today = 0; S.mineV = {}; runAct = null; declEdit = false; pEdit = null;   // 목표, 고객, 일정 목록은 유지
   save();
   return true;
 }
@@ -442,8 +526,31 @@ function summary(id) {
   if (id === 'goal') { var g = S.goals[0]; return g ? j([esc(g.name) + ' ' + g.cur + '/' + g.target + esc(g.unit), '이번 달']) : '목표를 추가해 주세요'; }
   if (id === 'clients') { var k = S.clients.filter(function (c) { return c.stage >= 3; }).length; return S.clients.length ? j(['진행 고객 ' + S.clients.length + '명', '계약 ' + k + '명']) : '고객을 추가해 주세요'; }
   if (id === 'focus') { var ff = S.focus; return ff.dir && ff.imm ? j(['방향성 ' + ff.dir, '몰입도 ' + ff.imm]) : '점수를 기록해요'; }
+  if (id === 'self') { var sf = S.self; return sf.eff && sf.kind ? j(['노력 인정 ' + sf.eff, '말투 ' + sf.kind]) : '점수를 기록해요'; }
   if (id === 'mental') { var mm = S.mental; return mm.emo && mm.body ? j(['감정 ' + mm.emo, '몸 ' + mm.body, '실행 ' + Object.keys(mm.acts).length + '개']) : '점수를 기록해요'; }
   return '';
+}
+var EFF_L = ['전혀', '조금', '보통', '꽤', '충분히'], KIND_L = ['가혹', '차가움', '보통', '따뜻', '다정'];
+function selfRecommend(eff, kind) {
+  var a = eff <= 3 ? ['proud3', 'effort'] : [], b = kind <= 3 ? ['friend', 'mirror'] : [], out = [], i;
+  if (!a.length && !b.length) return { lv: 'high', ids: ['mirror'] };
+  for (i = 0; i < 2; i++) { if (a[i]) out.push(a[i]); if (b[i] && out.indexOf(b[i]) < 0) out.push(b[i]); }
+  return { lv: Math.min(eff, kind) <= 2 ? 'low' : 'mid', ids: out.slice(0, 3) };
+}
+function viewSelf() {
+  var f = S.self, ready = f.eff && f.kind;
+  var body = '<div class="card"><div class="ct">오늘 나를 인정한 정도</div><p class="muted">결과와 상관없이, 오늘 애쓴 나를 얼마나 인정해 줬나요? 1 전혀 ~ 5 충분히</p>' + scoreRow('eff', EFF_L, f.eff, 's-score') + '</div>' +
+    '<div class="card"><div class="ct">나에게 한 말의 따뜻함</div><p class="muted">오늘 속으로 나에게 어떤 말투로 말했나요? 1 가혹 ~ 5 다정</p>' + scoreRow('kind', KIND_L, f.kind, 's-score') + '</div>' +
+    '<div class="card"><div class="ct">오늘 나에게 해 주는 인정 한 줄</div><p class="muted">작은 것도 좋아요. 결과보다 한 행동이나 애쓴 마음을 적어요.</p>' +
+    '<form class="form" data-form="selfline"><input type="text" name="line" maxlength="60" value="' + esc(f.line) + '" placeholder="예) 거절당해도 다음 전화를 걸었다" aria-label="오늘의 인정 한 줄"><button class="btn sm" type="submit">저장</button></form></div>';
+  if (!ready) body += '<p class="hint">두 점수를 모두 기록하면 지금 상태에 맞는 행동을 보여드려요.</p>';
+  else {
+    var rc = selfRecommend(f.eff, f.kind);
+    var head = { low: '오늘은 나에게 조금 가혹했어요', mid: '조금만 더 다정하게 말해 줘요', high: '충분히 인정해 주고 있어요' }[rc.lv];
+    body += '<h2 class="sub">' + head + '</h2><p class="cap">노력 인정 ' + f.eff + ' · 말투 ' + f.kind + '에 맞춰 골랐어요. 하나만 해도 충분해요.</p>' + rc.ids.map(actCard).join('');
+    if (rc.lv === 'low') body += '<p class="hint">오늘 모든 걸 인정하지 않아도 괜찮아요. 한 가지만 인정해도 충분해요.</p>';
+  }
+  return detail('self', body);
 }
 function chipFor(id) {
   if (id === 'edu') { var di = dlInfo(); if (di.imminent && !S.answer) return '<span class="chip warn">마감 임박</span>'; }
@@ -465,7 +572,7 @@ function brandRow() {
   return '<div class="brand"><div class="logo">' + ic('cube') + '<b class="h">ELITE</b><span>Sales Group</span></div>' +
     '<button class="iconbtn" data-act="theme" aria-label="' + (dark ? '라이트 모드로 바꾸기' : '다크 모드로 바꾸기') + '">' + ic(dark ? 'sun' : 'moon') + '</button></div>';
 }
-function scoresReady(id) { return id === 'mental' ? !!(S.mental.emo && S.mental.body) : (id === 'focus' ? !!(S.focus.dir && S.focus.imm) : true); }
+function scoresReady(id) { return id === 'mental' ? !!(S.mental.emo && S.mental.body) : (id === 'focus' ? !!(S.focus.dir && S.focus.imm) : (id === 'self' ? !!(S.self.eff && S.self.kind) : true)); }
 function detail(id, body) {
   var it = ITEMS.filter(function (i) { return i.id === id; })[0];
   var bar = S.done[id]
@@ -506,10 +613,12 @@ function weekTable() {
   }).join('') + '</div>';
   return '<div class="wk" role="table" aria-label="이번 주 영업루틴 체크표">' + head + rows + foot + '</div>';
 }
-var MROWS = [['emo', '감정', 'mental'], ['body', '몸 상태', 'mental'], ['dir', '방향성', 'focus'], ['imm', '몰입도', 'focus']];
+var MROWS = [['mental', '멘탈 관리', 'mental'], ['focus', '집중 관리', 'focus'], ['self', '내면 대화', 'self']];
+function avg2(a, b) { var v = [a, b].filter(function (x) { return x > 0; }); return v.length ? Math.round(v.reduce(function (x, y) { return x + y; }, 0) / v.length * 10) / 10 : 0; }
 function mScore(r, k) {
   var d = r && r.det; if (!d) return 0;
-  return (k === 'emo' || k === 'body') ? (d.m ? +d.m[k] || 0 : 0) : (d.f ? +d.f[k] || 0 : 0);
+  if (k === 'self') return d.s ? avg2(+d.s.eff || 0, +d.s.kind || 0) : 0;
+  return k === 'mental' ? (d.m ? avg2(+d.m.emo || 0, +d.m.body || 0) : 0) : (d.f ? avg2(+d.f.dir || 0, +d.f.imm || 0) : 0);
 }
 function mentalTable() {
   var days = weekDays(), by = {};
@@ -518,12 +627,74 @@ function mentalTable() {
     return '<div class="wk-r" role="row"><a class="wk-n" href="#' + m[2] + '">' + m[1] + '</a>' + days.map(function (x) {
       var t = x.d === S.date, v = mScore(by[x.d], m[0]), inner;
       if (x.d > S.date) inner = '<span class="mk none">·</span>';
-      else if (v) inner = '<span class="mk sc s' + v + '" title="' + m[1] + ' ' + v + '점">' + v + '</span>';
+      else if (v) inner = '<span class="mk sc s' + Math.round(v) + '" title="' + m[1] + ' 평균 ' + v + '점">' + v + '</span>';
       else inner = t ? '<span class="mk sc todo"></span>' : '<span class="mk none">–</span>';
       return t ? '<a class="wk-c t" role="cell" href="#' + m[2] + '" aria-label="' + m[1] + (v ? ' ' + v + '점' : ' 기록하러 가기') + '">' + inner + '</a>' : '<span class="wk-c" role="cell">' + inner + '</span>';
     }).join('') + '</div>';
   }).join('');
   return '<div class="wk mt" role="table" aria-label="이번 주 멘탈루틴 점수표">' + rows + '</div>';
+}
+VIEWS.self = viewSelf;
+var secOpen = {};
+function secDone(k) {
+  if (k === 'sales') return SALES.every(function (i) { return S.done[i.id]; });
+  if (k === 'mental') return MENTAL.every(function (i) { return S.done[i.id]; });
+  return S.mine.length > 0 && S.mine.every(function (m) { return S.mineV[m.id]; });
+}
+/* 끝난 구역은 접고 제목 오른쪽에 '완료'를 보여준다. 제목을 누르면 다시 펼쳐진다. */
+function secOpened(k) { var d = secDone(k); if (!d) delete secOpen[k]; return !d || !!secOpen[k]; }
+function secHead(k, title, extra) {
+  var d = secDone(k), open = secOpened(k);
+  if (!d) return '<h2 class="sub cs"><span style="flex:1">' + title + '</span>' + (extra || '') + '</h2>';
+  return '<h2 class="sub cs"><button class="shb" data-act="sec-toggle" data-k="' + k + '" aria-expanded="' + open + '" aria-controls="sec-' + k + '"><span>' + title + '</span><span class="chip ok">완료</span>' + ic('chev-r', 'cv') + '</button>' + (extra || '') + '</h2>';
+}
+function secBlock(k, title, bodyFn, extra) {
+  return secHead(k, title, extra) + (secOpened(k) ? '<div id="sec-' + k + '">' + bodyFn() + '</div>' : '');
+}
+var PMAX = 6;
+function pVal(r, id) {
+  var a = r && r.det && r.det.p; if (!a) return 0;
+  for (var i = 0; i < a.length; i++) if (a[i].id === id) return +a[i].v || 0;
+  return 0;
+}
+function mineBlock() {
+  var days = weekDays(), by = {};
+  logRecords().forEach(function (r) { by[r.d] = r; });
+  var add = '<button class="btn xs" data-act="p-add"' + (S.mine.length >= PMAX ? ' disabled' : '') + '>' + ic('plus') + '<span>추가</span></button>';
+  var out = secHead('mine', '오늘의 개인루틴', add);
+  if (!secOpened('mine')) return out;
+  if (!S.mine.length) return out + '<div class="pe">나만의 루틴을 직접 만들어 보세요.<br>했는지 안 했는지 체크하거나, 점수로 기록할 수 있어요.</div>';
+  return out + S.mine.map(function (m) {
+    var v = S.mineV[m.id] || 0;
+    var ctl = m.type === 'check'
+      ? '<button class="tg" data-act="p-check" data-id="' + m.id + '" aria-pressed="' + (!!v) + '">' + (v ? ic('check') + '<span>했어요</span>' : '<span>오늘 했나요? 눌러서 체크</span>') + '</button>'
+      : scoreRow(m.id, ['1', '2', '3', '4', '5'].map(function () { return ''; }), v, 'p-score').replace(/<span><\/span>/g, '');
+    var strip = '<div class="pr-w" role="group" aria-label="이번 주 ' + esc(m.name) + '">' + days.map(function (x) {
+      var t = x.d === S.date, val = t ? v : pVal(by[x.d], m.id), inner;
+      if (x.d > S.date) inner = '<span class="mk none">·</span>';
+      else if (val) inner = m.type === 'check' ? '<span class="mk ok">' + ic('check') + '</span>' : '<span class="mk sc s' + val + '">' + val + '</span>';
+      else inner = t ? '<span class="mk sc todo"></span>' : '<span class="mk none">–</span>';
+      return '<div class="' + (t ? 't' : '') + '"><i>' + x.wd + '</i>' + inner + '</div>';
+    }).join('') + '</div>';
+    return '<section class="pr" aria-label="' + esc(m.name) + '"><div class="pr-h"><b>' + esc(m.name) + '</b><span class="chip">' + (m.type === 'check' ? '체크형' : '점수형') + '</span>' +
+      '<button class="ib2" data-act="p-edit" data-id="' + m.id + '" aria-label="' + esc(m.name) + ' 수정">' + ic('edit') + '</button></div>' + ctl + strip + '</section>';
+  }).join('');
+}
+function mineModal() {
+  if (!pEdit) return '';
+  var isNew = pEdit === 'new', cur = isNew ? null : S.mine.filter(function (m) { return m.id === pEdit; })[0];
+  if (!isNew && !cur) return '';
+  var type = isNew ? pType : cur.type;
+  var typeRow = isNew
+    ? '<div class="chips" role="group" aria-label="루틴 형태"><button data-act="p-type" data-v="check" aria-pressed="' + (type === 'check') + '">체크형 · 했는지 안 했는지</button><button data-act="p-type" data-v="score" aria-pressed="' + (type === 'score') + '">점수형 · 1~5점 기록</button></div>'
+    : '<p class="note" style="margin:4px 0 0">형태: <b>' + (type === 'check' ? '체크형' : '점수형') + '</b> (만든 뒤에는 바꿀 수 없어요)</p>';
+  return '<div class="modal" role="dialog" aria-modal="true" aria-label="' + (isNew ? '개인루틴 추가' : '개인루틴 수정') + '"><div class="bd" data-act="p-cancel"></div><div class="sheet">' +
+    '<h3 class="h">' + (isNew ? '개인루틴 추가' : '개인루틴 수정') + '</h3>' +
+    '<input type="text" class="pn" id="pName" maxlength="20" value="' + esc(isNew ? pName : cur.name) + '" placeholder="예) 물 2리터 마시기" aria-label="루틴 이름">' +
+    '<div style="margin:10px 0 0"><b style="font-size:14px">어떤 형태로 기록할까요?</b></div>' + typeRow +
+    '<div class="two"><button class="btn ghost" data-act="p-cancel">취소</button><button class="btn" data-act="p-save">저장</button></div>' +
+    (isNew ? '' : '<div style="margin-top:8px"><button class="btn ghost" data-act="p-del" style="color:var(--bad)">' + (pDel ? '정말 삭제할까요? 한 번 더 누르세요' : '이 루틴 삭제') + '</button></div>') +
+    '</div></div>';
 }
 VIEWS.home = function () {
   var n = doneCount(), total = ITEMS.length;
@@ -537,14 +708,14 @@ VIEWS.home = function () {
     return '<a class="row" href="#' + i.id + '"><span class="ib ' + (d ? 'done' : '') + '">' + ic(d ? 'check' : i.icon) + '</span>' +
       '<span class="rt"><b>' + i.title + '</b><span>' + summary(i.id) + '</span></span>' + chipFor(i.id) + ic('chev-r', 'chev') + '</a>';
   };
-  return '<div class="screen">' + brandRow() +
+  return '<div class="screen">' + brandRow() + noticeBar() +
     '<section class="hero cp" aria-label="오늘의 진행"><div class="date">' + longDate(now()) + '</div>' +
     '<div class="top"><h1 class="h">' + (n === total ? '오늘 루틴을 모두 마쳤어요' : '오늘의 루틴을 점검해요') + '</h1><div class="big h"><span data-n>' + n + '</span><small>/' + total + '</small></div></div>' +
     '<div class="seg" role="img" aria-label="' + total + '개 중 ' + n + '개 완료">' + seg + '</div>' + cta + '</section>' +
-    declBlock() + '<h2 class="sub cs">오늘의 영업루틴</h2>' + weekTable() +
-    '<h2 class="sub cs">오늘의 멘탈루틴</h2>' + mentalTable() +
+    declBlock() + secBlock('sales', '오늘의 영업루틴', weekTable) +
+    secBlock('mental', '오늘의 멘탈루틴', mentalTable) + mineBlock() +
     (anySample() ? '<p class="note" style="font-size:13px">' + EXTAG + ' 교육 일정, 목표, 고객, 할 일 일부는 예시예요. 직접 고치면 내 데이터가 돼요.</p>' : '') +
-    '</div>' + tabbar('home') + declModal();
+    '</div>' + tabbar('home') + declModal() + mineModal();
 };
 VIEWS.attend = function () {
   var a = S.done.attend;
@@ -610,7 +781,7 @@ VIEWS.clients = function () {
 };
 function cells(c) { return '<div class="cells">' + c.map(function (x) { return '<i class="' + (x ? 'on' : '') + '"></i>'; }).join('') + '<em>' + c.reduce(function (a, b) { return a + b; }, 0) + '/' + c.length + '</em></div>'; }
 /* 기록: 날짜별 카드 + 2주치 예시 */
-var LOGLAB = ['출근', '교육', '계획', '목표', '고객', '멘탈', '집중'];
+var LOGLAB = ['출근', '교육', '계획', '목표', '고객', '멘탈', '집중', '내면'];
 // [완료 칸, 출근, 참석응답, 완료한 일정 수, 신규 계약, 계약 고객]  (어제부터 14일 전까지)
 var SAMPLE_PAT = [
   ['11111', '08:51', 'y', 4, 2, 1], ['11110', '09:08', 'y', 3, 2, 1], ['11111', '08:47', 'y', 4, 2, 1],
@@ -620,16 +791,39 @@ var SAMPLE_PAT = [
   ['11111', '08:46', 'y', 4, 0, 0], ['11011', '09:12', '', 2, 0, 0]
 ];
 var FS = [[4,3],[3,3],[4,4],[2,2],[3,2],[5,4],[4,3],[0,0],[4,4],[3,3],[4,5],[0,0],[5,4],[3,2]];
+var SS = [[3,3],[4,3],[3,2],[2,2],[3,3],[4,4],[3,3],[0,0],[4,4],[3,2],[4,4],[0,0],[5,4],[3,3]];
 var MS = [[4,3,1],[3,3,2],[4,4,0],[2,2,3],[3,2,2],[4,4,1],[4,3,1],[0,0,0],[5,4,0],[3,3,2],[4,4,0],[0,0,0],[4,5,1],[3,2,3]];
+/* 예시 기록: 최근 70일, 평일만, 항목마다 약 65% 확률로 완료 (날짜별로 값이 고정되도록 날짜로 난수를 만든다) */
+function rng(str) {
+  var h = 1779033703 ^ str.length, i;
+  for (i = 0; i < str.length; i++) { h = Math.imul(h ^ str.charCodeAt(i), 3432918353); h = (h << 13) | (h >>> 19); }
+  var a = (h ^ (h >>> 16)) >>> 0;
+  return function () {
+    a = (a + 0x6D2B79F5) >>> 0; var t = a;
+    t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+var SAMPLE_DAYS = 70, SAMPLE_RATE = 0.65, SAMPLE_SEED = 'elite-24-';
 function sampleRecords() {
-  return SAMPLE_PAT.map(function (p, k) {
-    var d = new Date(now()); d.setDate(d.getDate() - (k + 1));
-    var at = null, late = false;
-    if (p[1]) { var hh = +p[1].slice(0, 2), mm = +p[1].slice(3); var t = new Date(d); t.setHours(hh, mm, 0, 0); at = t.getTime(); late = isLate(at); }
-    var ms = MS[k] || [0, 0, 0], fs = FS[k] || [0, 0];
-    return { d: dstr(d.getTime()), sample: true, cells: p[0].split('').map(Number).concat([ms[0] > 0 ? 1 : 0, fs[0] > 0 ? 1 : 0]), at: at, late: late,
-      det: { ans: p[2], pd: p[3], pt: 4, g: { name: '신규 계약', cur: p[4], target: 5, unit: '건' }, cn: 6, ck: p[5], m: { emo: ms[0], body: ms[1], acts: ms[2] }, f: { dir: fs[0], imm: fs[1] } } };
-  });
+  var out = [], k, d, w, key, r, cells, at, late, t, sc, pick;
+  var P = [2, 3, 3, 4, 4, 4, 5, 3];
+  for (k = 1; k <= SAMPLE_DAYS; k++) {
+    d = new Date(now()); d.setDate(d.getDate() - k); w = d.getDay();
+    if (w === 0 || w === 6) continue;   // 토, 일은 기록 없음
+    key = dstr(d.getTime()); r = rng(SAMPLE_SEED + key);
+    cells = ITEMS.map(function () { return r() < SAMPLE_RATE ? 1 : 0; });
+    at = null; late = false;
+    if (cells[0]) { t = new Date(d); t.setHours(8, 35 + Math.floor(r() * 55), 0, 0); at = t.getTime(); late = isLate(at); }
+    sc = function () { return P[Math.floor(r() * P.length)]; };
+    out.push({ d: key, sample: true, cells: cells, at: at, late: late, det: {
+      ans: cells[1] ? (r() < 0.75 ? 'y' : 'n') : '', pd: cells[2] ? 3 + Math.floor(r() * 2) : Math.floor(r() * 3), pt: 4,
+      g: { name: '신규 계약', cur: cells[3] ? 1 + Math.floor(r() * 4) : Math.floor(r() * 2), target: 5, unit: '건' }, cn: 6, ck: cells[4] ? 1 + Math.floor(r() * 2) : 0,
+      m: cells[5] ? { emo: sc(), body: sc(), acts: Math.floor(r() * 3) } : { emo: 0, body: 0, acts: 0 },
+      f: cells[6] ? { dir: sc(), imm: sc() } : { dir: 0, imm: 0 },
+      s: cells[7] ? { eff: sc(), kind: sc(), line: '', acts: 0 } : { eff: 0, kind: 0, line: '', acts: 0 } } });
+  }
+  return out;
 }
 function logRecords() {
   var cur = { d: S.date, today: true, cells: ITEMS.map(function (i) { return S.done[i.id] ? 1 : 0; }), at: S.done.attend ? S.done.attend.at : null, late: S.done.attend ? !!S.done.attend.late : false, det: details() };
@@ -646,10 +840,11 @@ function lineText(i, r) {
   if (id === 'plan') return dt ? '일정 ' + dt.pd + '/' + dt.pt + ' 완료' : '완료';
   if (id === 'goal') return dt && dt.g ? esc(dt.g.name) + ' ' + dt.g.cur + '/' + dt.g.target + esc(dt.g.unit) : '완료';
   if (id === 'focus') return dt && dt.f && dt.f.dir ? j(['방향성 ' + dt.f.dir, '몰입도 ' + dt.f.imm]) : '완료';
+  if (id === 'self') return dt && dt.s && dt.s.eff ? j(['노력 인정 ' + dt.s.eff, '말투 ' + dt.s.kind]) : '완료';
   if (id === 'mental') return dt && dt.m && dt.m.emo ? j(['감정 ' + dt.m.emo, '몸 ' + dt.m.body, '실행 ' + dt.m.acts + '개']) : '완료';
   return dt ? j(['고객 ' + dt.cn + '명', '계약 ' + dt.ck + '명']) : '완료';
 }
-var LOGVIEWS = [['day', '날짜별'], ['attend', '출근별'], ['edu', '교육별'], ['plan', '계획별'], ['goal', '목표별'], ['clients', '고객별'], ['mental', '멘탈별'], ['focus', '집중별']];
+var LOGVIEWS = [['grid', '항목별'], ['day', '날짜별'], ['attend', '출근별'], ['edu', '교육별'], ['plan', '계획별'], ['goal', '목표별'], ['clients', '고객별'], ['mental', '멘탈별'], ['focus', '집중별'], ['self', '내면별']];
 function cnt(r) { return r.cells.reduce(function (a, b) { return a + b; }, 0); }
 function isYes(a) { return a === 'y' || a === 'yes'; }
 function isNo(a) { return a === 'n' || a === 'no'; }
@@ -658,6 +853,75 @@ function tiles(a) { return '<div class="stats">' + a.map(function (x) { return '
 function rhead(r, right) { return '<div class="pl"><b>' + dayLabel(r.d) + (r.today ? ' · 오늘' : '') + '</b><span>' + right + '</span></div>'; }
 function minOf(t) { var d = new Date(t); return d.getHours() * 60 + d.getMinutes(); }
 
+function rangeDays(n) {
+  var p = S.date.split('-'), out = [], i, x;
+  for (i = n - 1; i >= 0; i--) { x = new Date(+p[0], +p[1] - 1, +p[2] - i); out.push({ d: dstr(x.getTime()), wd: WD[x.getDay()], n: x.getDate(), w: x.getDay() }); }
+  return out;
+}
+function inRange(r) { var d0 = rangeDays(S.logRange || 7)[0].d; return r.d >= d0; }
+var gxLeft = 0, gxKey = '';
+function gridView(recs, n, only) {
+  var by = {};
+  recs.forEach(function (r) { by[r.d] = r; });
+  var days = rangeDays(n);
+  var pm = {}, pord = [];
+  recs.slice().sort(function (a, b) { return a.d < b.d ? -1 : 1; }).forEach(function (r) {
+    ((r.det && r.det.p) || []).forEach(function (q) { if (!pm[q.id]) pord.push(q.id); pm[q.id] = { id: q.id, name: q.n, type: q.t }; });
+  });
+  var rowsDef = ITEMS.map(function (it, k) { return { name: it.title, kind: 'item', k: k, id: it.id }; }).concat(pord.map(function (id) { return { name: pm[id].name, kind: 'p', id: id, type: pm[id].type }; }));
+  function st(row, x) {
+    var r = by[x.d], t = x.d === S.date;
+    if (!r) return [t ? 'todo' : 'none', 0];
+    if (row.kind === 'item') {
+      if (r.cells[row.k]) return [row.id === 'attend' && r.late ? 'late' : 'ok', 1];
+      return [t ? 'todo' : 'no', 0];
+    }
+    var v = pVal(r, row.id);
+    if (v) return [row.type === 'check' ? 'ok' : 's' + v, v];
+    var has = r.det && r.det.p && r.det.p.some(function (q) { return q.id === row.id; });
+    return [t ? 'todo' : (has ? 'no' : 'none'), 0];
+  }
+  function sum(row) {
+    var d = 0, tot = 0, sc = 0;
+    days.forEach(function (x) {
+      if (x.w === 0 || x.w === 6) return;
+      var s = st(row, x);
+      if (s[0] === 'none' || s[0] === 'todo') return;
+      tot++; if (s[1]) { d++; sc += s[1]; }
+    });
+    if (row.kind === 'p' && row.type === 'score') return tot ? (d ? '평균 ' + Math.round(sc / d * 10) / 10 + '점 · ' : '') + d + '/' + tot : '기록 없음';
+    return tot ? d + '/' + tot + ' · ' + Math.round(d / tot * 100) + '%' : '기록 없음';
+  }
+  if (only) rowsDef = rowsDef.filter(function (r) { return r.id === only; });
+  var we = function (x) { return x.w === 0 || x.w === 6; };
+  var cellCls = function (x) { return 'gx-c' + (we(x) ? ' we' : '') + (x.d === S.date ? ' t' : ''); };
+  var month = '<div class="gx-r gx-m"><span class="gx-n"></span>' + days.map(function (x, i) {
+    return '<span class="' + cellCls(x) + '">' + (i === 0 || x.n === 1 ? '<em>' + (+x.d.slice(5, 7)) + '월</em>' : '') + '</span>';
+  }).join('') + '</div>';
+  var head = '<div class="gx-r gx-h"><span class="gx-n">최근 ' + n + '일</span>' + days.map(function (x) {
+    return '<span class="' + cellCls(x) + '"' + (!we(x) && by[x.d] ? ' data-act="log-day" data-d="' + x.d + '" style="cursor:pointer"' : '') + '>' + (we(x) ? '' : '<i>' + x.wd + '</i><b>' + x.n + '</b>') + '</span>';
+  }).join('') + '</div>';
+  var body = rowsDef.map(function (row) {
+    return '<div class="gx-r" role="row"><span class="gx-n"><b>' + esc(row.name) + '</b><small>' + sum(row) + '</small></span>' + days.map(function (x) {
+      var inner = '';
+      if (!we(x)) {
+        var s = st(row, x);
+        if (s[0] === 'ok' || s[0] === 'late') inner = row.kind === 'p' && row.type === 'score' ? '<span class="mk sc s' + s[1] + '">' + s[1] + '</span>' : '<span class="mk ' + s[0] + '">' + ic('check') + '</span>';
+        else if (s[0].charAt(0) === 's') inner = '<span class="mk sc s' + s[1] + '">' + s[1] + '</span>';
+        else if (s[0] === 'todo') inner = '<span class="mk todo"></span>';
+        else inner = '<span class="mk none">' + (s[0] === 'no' ? '–' : '·') + '</span>';
+      }
+      return '<span class="' + cellCls(x) + '" role="cell"' + (!we(x) && by[x.d] ? ' data-act="log-day" data-d="' + x.d + '"' : '') + ' title="' + (+x.d.slice(5, 7)) + '/' + x.n + '(' + x.wd + ')">' + inner + '</span>';
+    }).join('') + '</div>';
+  }).join('');
+  var foot = only ? '' : '<div class="gx-r gx-f"><span class="gx-n"><b>하루 완료</b></span>' + days.map(function (x) {
+    var r = by[x.d];
+    return '<span class="' + cellCls(x) + '">' + (we(x) || !r || x.d > S.date ? '' : cnt(r)) + '</span>';
+  }).join('') + '</div>';
+  var lg = '<div class="lg"><span><i class="ok"></i>완료</span><span><i class="late"></i>지각</span><span><i class="no"></i>안 함</span><span><i class="none"></i>기록 없음</span></div>';
+  return lg + '<div class="gx" tabindex="0" role="table" aria-label="항목별 체크표. 좌우로 밀어서 볼 수 있어요"><div class="gx-in">' + month + head + body + foot + '</div></div>' +
+    '<p class="cap">좌우로 밀어서 이전 날짜를 볼 수 있어요. 날짜나 칸을 누르면 그날 기록이 열려요. 토·일은 비워 두었어요.' + (only ? '' : ' 맨 아래 숫자는 그날 완료한 항목 수(최대 ' + ITEMS.length + ')예요.') + '</p>';
+}
 function dayView(recs) {
   return recs.map(function (r) {
     var n = cnt(r);
@@ -718,6 +982,16 @@ function itemView(id, recs) {
       var f = r.det.f;
       return rhead(r, j(['방향성 ' + f.dir, '몰입도 ' + f.imm])) + pbar(f.dir * 20, f.dir <= 2, f.dir >= 4) + pbar(f.imm * 20, f.imm <= 2, f.imm >= 4);
     };
+  } else if (id === 'self') {
+    var ws = recs.filter(function (r) { return r.det && r.det.s && r.det.s.eff; });
+    var as = function (k) { return ws.length ? Math.round(ws.reduce(function (a, r) { return a + r.det.s[k]; }, 0) / ws.length * 10) / 10 : '-'; };
+    st = tiles([[as('eff'), '평균 노력 인정'], [as('kind'), '평균 말투'], [ws.filter(function (r) { return r.det.s.line; }).length, '한 줄 적은 날']]);
+    cap = '위 막대는 노력 인정, 아래 막대는 나에게 한 말의 따뜻함이에요(1~5점). 4점 이상은 초록이에요.';
+    rowFn = function (r) {
+      if (!r.det || !r.det.s || !r.det.s.eff) return rhead(r, '<span class="chip">기록 없음</span>');
+      var q = r.det.s;
+      return rhead(r, j(['노력 인정 ' + q.eff, '말투 ' + q.kind])) + pbar(q.eff * 20, q.eff <= 2, q.eff >= 4) + pbar(q.kind * 20, q.kind <= 2, q.kind >= 4) + (q.line ? '<p class="cap" style="margin:4px 0 0">' + esc(q.line) + '</p>' : '');
+    };
   } else if (id === 'mental') {
     var wm = recs.filter(function (r) { return r.det && r.det.m && r.det.m.emo; });
     var ae = wm.length ? Math.round(wm.reduce(function (a, r) { return a + r.det.m.emo; }, 0) / wm.length * 10) / 10 : '-';
@@ -741,22 +1015,177 @@ function itemView(id, recs) {
   return st + (cap ? '<p class="cap">' + cap + '</p>' : '') + '<div class="card" style="padding:4px 16px">' +
     recs.map(function (r) { return '<div class="prow">' + (cnt(r) === 0 && !(r.today && r.det && r.det.pd > 0) ? rhead(r, '<span class="chip">' + (r.today ? '오늘 진행 전' : '기록 없음') + '</span>') : rowFn(r)) + '</div>'; }).join('') + '</div>';
 }
+/* ---------- 기록 분석: 요약, 항목별 ---------- */
+var LOGTABS = [['sum', '요약'], ['grid', '체크표'], ['items', '항목별']];
+var logItem = null, logDay = null;
+var TIPS = {
+  attend: '출근하면 가장 먼저 이 앱을 열어 출근 기록하기',
+  edu: '전날 저녁에 내일 교육 일정을 확인하고 참석 여부 답하기',
+  plan: '아침에 오늘 할 일 3개만 먼저 점검하기',
+  goal: '주 1회 목표 숫자를 직접 고쳐서 내 위치 확인하기',
+  clients: '오늘 연락할 고객 한 명을 정해 단계 업데이트하기',
+  mental: '지치는 날일수록 점수를 기록하고 추천 행동 한 가지 하기',
+  focus: '아침에 오늘의 한 가지를 정하고 휴대폰 치워 두기',
+  self: '퇴근 전에 오늘 잘한 일 한 가지를 인정 한 줄로 적기',
+  p: '기록하는 시간을 정해 두고 같은 때에 체크하기'
+};
+function addDays(str, k) { var q = str.split('-'); return dstr(new Date(+q[0], +q[1] - 1, +q[2] + k).getTime()); }
+function wdOf(str) { var q = str.split('-'); return new Date(+q[0], +q[1] - 1, +q[2]).getDay(); }
+function countedRec(r) { var w = wdOf(r.d); return r.d < S.date && ((w >= 1 && w <= 5) || cnt(r) > 0); }
+function scoreOf(id, r) {
+  var d = r.det; if (!d) return 0;
+  if (id === 'mental') return d.m ? avg2(+d.m.emo || 0, +d.m.body || 0) : 0;
+  if (id === 'focus') return d.f ? avg2(+d.f.dir || 0, +d.f.imm || 0) : 0;
+  if (id === 'self') return d.s ? avg2(+d.s.eff || 0, +d.s.kind || 0) : 0;
+  return 0;
+}
+function logCtx(n) {
+  var all = logRecords(), start = rangeDays(n)[0].d, yest = addDays(S.date, -1);
+  var pStart = addDays(start, -n), pEnd = addDays(start, -1);
+  var cur = all.filter(function (r) { return r.d >= start && r.d <= yest && countedRec(r); }).sort(function (a, b) { return a.d < b.d ? -1 : 1; });
+  var prev = all.filter(function (r) { return r.d >= pStart && r.d <= pEnd && countedRec(r); });
+  var pm = {}, pord = [];
+  all.filter(function (r) { return r.d >= start; }).sort(function (a, b) { return a.d < b.d ? -1 : 1; }).forEach(function (r) {
+    ((r.det && r.det.p) || []).forEach(function (q) { if (!pm[q.id]) pord.push(q.id); pm[q.id] = { id: q.id, name: q.n, type: q.t }; });
+  });
+  var rows = ITEMS.map(function (it, k) { return { id: it.id, name: it.title, kind: 'item', k: k, score: MENTAL_IDS.indexOf(it.id) >= 0 }; })
+    .concat(pord.map(function (id) { return { id: id, name: pm[id].name, kind: 'p', type: pm[id].type, score: pm[id].type === 'score' }; }));
+  function val(row, r) {
+    if (row.kind === 'item') return r.cells[row.k] ? 1 : 0;
+    var has = r.det && r.det.p && r.det.p.some(function (q) { return q.id === row.id; });
+    return has ? (pVal(r, row.id) ? 1 : 0) : null;
+  }
+  function stat(row, set) {
+    var d = 0, t = 0, wd = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]], sc = [], miss = 0, run = true, last = [], i, r, v, w;
+    set.forEach(function (r) { v = val(row, r); if (v === null) return; t++; d += v; w = wdOf(r.d); if (w >= 1 && w <= 5) { wd[w - 1][1]++; wd[w - 1][0] += v; } });
+    var seq = set.slice().sort(function (a, b) { return a.d < b.d ? -1 : 1; }).filter(function (r) { return val(row, r) !== null; });
+    for (i = seq.length - 1; i >= 0; i--) { v = val(row, seq[i]); if (last.length < 5) last.unshift(v); if (run) { if (v === 0) miss++; else run = false; } }
+    seq.forEach(function (r) { var x = row.kind === 'p' ? (row.type === 'score' ? pVal(r, row.id) : 0) : scoreOf(row.id, r); if (x > 0) sc.push(x); });
+    var avg = sc.length ? Math.round(sc.reduce(function (a, b) { return a + b; }, 0) / sc.length * 10) / 10 : 0;
+    var lowRun = 0; for (i = seq.length - 1; i >= 0; i--) { var y = row.kind === 'p' ? pVal(seq[i], row.id) : scoreOf(row.id, seq[i]); if (y > 0 && y <= 2) lowRun++; else break; }
+    return { d: d, t: t, rate: t ? Math.round(d / t * 100) : null, wd: wd, miss: miss, last: last, avg: avg, lowRun: lowRun, lowDays: sc.filter(function (x) { return x <= 3; }).length, nsc: sc.length };
+  }
+  var st = rows.map(function (row) {
+    var c = stat(row, cur), p = stat(row, prev);
+    return { row: row, c: c, p: p, delta: c.rate !== null && p.rate !== null && p.t >= 3 ? c.rate - p.rate : null };
+  });
+  return { n: n, start: start, cur: cur, prev: prev, st: st, all: all };
+}
+function overallRate(set) {
+  if (!set.length) return null;
+  var d = 0; set.forEach(function (r) { d += ITEMS.reduce(function (a, it, k) { return a + (r.cells[k] ? 1 : 0); }, 0); });
+  return Math.round(d / (set.length * ITEMS.length) * 100);
+}
+function rateChip(v) { return v === null ? '<span class="chip">기록 없음</span>' : '<span class="chip ' + (v >= 70 ? 'ok' : (v >= 50 ? 'warn' : 'bad')) + '">' + v + '%</span>'; }
+function deltaTxt(dl) { return dl === null ? '' : (dl === 0 ? '<span class="muted">변화 없음</span>' : '<span class="' + (dl > 0 ? 'dup' : 'ddn') + '">' + (dl > 0 ? '▲ +' : '▼ ') + dl + '%p</span>'); }
+function streakNow(all) {
+  var by = {}, c = 0, d = S.date, i;
+  all.forEach(function (r) { by[r.d] = r; });
+  for (i = 0; i < 130; i++) {
+    var w = wdOf(d), r = by[d];
+    if (w >= 1 && w <= 5) { if (r && cnt(r) > 0) c++; else if (d !== S.date) break; }
+    d = addDays(d, -1);
+  }
+  return c;
+}
+function weakReasons(x) {
+  var out = [], c = x.c, DN = ['', '월', '화', '수', '목', '금'], i, best = null;
+  if (c.rate !== null && c.rate < 50) out.push('완료율 낮음');
+  if (x.delta !== null && x.delta <= -10) out.push('지난 기간보다 ' + (-x.delta) + '%p 하락');
+  if (c.miss >= 3) out.push('최근 ' + c.miss + '일 연속 못 함');
+  if (c.rate !== null) for (i = 0; i < 5; i++) { if (c.wd[i][1] >= 3) { var rt = Math.round(c.wd[i][0] / c.wd[i][1] * 100); if (c.rate - rt >= 25 && (!best || rt < best[1])) best = [i + 1, rt]; } }
+  if (best) out.push(DN[best[0]] + '요일에 특히 약함(' + best[1] + '%)');
+  if (x.row.score && c.nsc >= 3 && c.avg > 0 && c.avg <= 3) out.push('평균 ' + c.avg + '점');
+  if (c.lowRun >= 2) out.push('2점 이하 ' + c.lowRun + '일 연속');
+  return out;
+}
+function weakList(ctx) {
+  var list = ctx.st.filter(function (x) { return x.c.t >= 3; }).map(function (x) {
+    var rs = weakReasons(x), sev = (70 - (x.c.rate || 0)) + (x.delta !== null && x.delta < 0 ? -x.delta : 0) + (x.c.miss >= 3 ? 10 : 0) + (x.c.lowRun >= 2 ? 10 : 0);
+    return { x: x, rs: rs, sev: sev };
+  }).filter(function (o) { return o.rs.length || (o.x.c.rate !== null && o.x.c.rate < 70); });
+  list.sort(function (a, b) { return b.sev - a.sev; });
+  return list.slice(0, 3);
+}
+function weekBars(cur) {
+  var g = {}, ord = [];
+  cur.forEach(function (r) { var w = wdOf(r.d), mon = addDays(r.d, -((w + 6) % 7)); if (!g[mon]) { g[mon] = []; ord.push(mon); } g[mon].push(r); });
+  ord.sort();
+  return ord.slice(-10).map(function (m) { return { m: m, rate: overallRate(g[m]) }; });
+}
+function sumView(ctx) {
+  var n = ctx.n, cur = ctx.cur;
+  if (cur.length < 3) return '<div class="pe">아직 기록이 적어요.<br>며칠 기록이 쌓이면 여기서 안 되고 있는 항목을 알려드려요.</div>';
+  var or = overallRate(cur), pr = ctx.prev.length >= 3 ? overallRate(ctx.prev) : null, dl = pr === null ? null : or - pr;
+  var wdays = rangeDays(n).filter(function (x) { return x.w >= 1 && x.w <= 5 && x.d < S.date; }).length;
+  var bars = weekBars(cur);
+  var bh = bars.map(function (b) {
+    var cls = b.rate >= 70 ? 'ok' : (b.rate >= 50 ? 'warn' : 'bad');
+    return '<div class="wb"><span class="wbv">' + b.rate + '</span><i class="' + cls + '" style="height:' + Math.max(4, b.rate * 0.62) + 'px"></i><span class="wbl">' + (+b.m.slice(5, 7)) + '/' + (+b.m.slice(8)) + '</span></div>';
+  }).join('');
+  var top = '<div class="card"><div class="ct">전체 완료율 · 최근 ' + n + '일</div><div class="bigrate"><b class="h">' + or + '%</b>' + (dl === null ? '<span class="muted">비교할 지난 기간 기록이 아직 없어요</span>' : '<span>지난 ' + n + '일보다 ' + deltaTxt(dl) + '</span>') + '</div>' +
+    '<div class="stats" style="margin:10px 0 0"><div class="stat"><span class="h">' + cur.length + '/' + wdays + '</span><span>기록한 날</span></div><div class="stat"><span class="h">' + streakNow(ctx.all) + '일</span><span>연속 기록</span></div><div class="stat"><span class="h">' + cur.filter(function (r) { return r.late; }).length + '</span><span>지각</span></div></div>' +
+    '<div class="ct" style="margin-top:14px">주별 완료율</div><div class="wbars" role="img" aria-label="주별 완료율">' + bh + '</div></div>';
+  var weak = weakList(ctx);
+  var wk = '<h2 class="sub cs">먼저 챙길 것</h2>' + (weak.length ? weak.map(function (o, i) {
+    var tip = o.x.row.kind === 'p' ? TIPS.p : TIPS[o.x.row.id];
+    return '<button class="wcard" data-act="log-open-item" data-id="' + o.x.row.id + '"><div class="wh"><span class="wn">' + (i + 1) + '</span><b>' + esc(o.x.row.name) + '</b>' + rateChip(o.x.c.rate) + '</div>' +
+      '<p class="wr">' + o.rs.join(' · ') + (o.rs.length ? '' : '70%에 조금 못 미쳐요') + '</p><p class="wt">→ ' + tip + '</p></button>';
+  }).join('') : '<div class="pe">모든 항목이 70% 이상이에요. 지금 흐름을 이어가요.</div>');
+  var good = ctx.st.filter(function (x) { return x.c.rate !== null && x.c.rate >= 70 && x.c.t >= 3; }).sort(function (a, b) { return b.c.rate - a.c.rate; }).slice(0, 3);
+  var gd = '<h2 class="sub cs">잘하고 있는 것</h2>' + (good.length ? '<div class="card" style="padding:6px 16px">' + good.map(function (x) {
+    return '<div class="kv"><span>' + esc(x.row.name) + '</span><b>' + x.c.rate + '% ' + deltaTxt(x.delta) + '</b></div>';
+  }).join('') + '</div>' : '<p class="cap">아직 70%를 넘은 항목이 없어요. 가장 쉬운 항목부터 이어가요.</p>');
+  return top + wk + gd + '<p class="cap">완료율은 오늘을 뺀 지난 기록 기준이에요. 항목을 누르면 자세히 볼 수 있어요.</p>';
+}
+function miniDots(last) { return '<span class="mdots">' + last.map(function (v) { return '<i class="' + (v ? 'ok' : 'no') + '"></i>'; }).join('') + '</span>'; }
+function itemsView(ctx) {
+  if (ctx.cur.length < 3) return '<div class="pe">아직 기록이 적어요.<br>며칠 기록이 쌓이면 항목별로 비교해서 보여드려요.</div>';
+  var list = ctx.st.filter(function (x) { return x.c.t > 0; }).sort(function (a, b) { return a.c.rate - b.c.rate; });
+  return '<p class="cap">완료율이 낮은 항목이 위에 있어요. 누르면 자세히 볼 수 있어요.</p>' + list.map(function (x) {
+    return '<button class="icard" data-act="log-open-item" data-id="' + x.row.id + '"><div class="ih"><b>' + esc(x.row.name) + '</b>' + rateChip(x.c.rate) + '</div>' +
+      pbar(x.c.rate, x.c.rate < 50, x.c.rate >= 70) + '<div class="im"><span>' + x.c.d + '/' + x.c.t + '일 ' + deltaTxt(x.delta) + '</span>' + miniDots(x.c.last) + '</div></button>';
+  }).join('');
+}
+function itemDetail(ctx, id) {
+  var x = ctx.st.filter(function (q) { return q.row.id === id; })[0];
+  var back = '<button class="btn ghost sm" data-act="log-item-back" style="margin-bottom:10px">' + ic('chev-l') + '<span>항목별로</span></button>';
+  if (!x) return back + '<div class="pe">이 기간에 기록이 없어요.</div>';
+  var c = x.c, DN = ['월', '화', '수', '목', '금'];
+  var tiles1 = '<div class="stats"><div class="stat"><span class="h">' + (c.rate === null ? '-' : c.rate + '%') + '</span><span>완료율</span></div><div class="stat"><span class="h">' + c.d + '/' + c.t + '</span><span>완료한 날</span></div><div class="stat"><span class="h">' + c.miss + '일</span><span>연속 못 함</span></div></div>';
+  var dl = x.delta === null ? '' : '<p class="cap">지난 ' + ctx.n + '일보다 ' + deltaTxt(x.delta) + '</p>';
+  var wds = '<div class="card"><div class="ct">요일별 완료율</div>' + c.wd.map(function (w, i) {
+    var r = w[1] ? Math.round(w[0] / w[1] * 100) : null;
+    return '<div class="wdr"><span>' + DN[i] + '</span>' + (r === null ? '<div class="track"></div><b>-</b>' : pbar(r, r < 50, r >= 70) + '<b>' + r + '%</b>') + '</div>';
+  }).join('') + '</div>';
+  var sc = x.row.score && c.nsc ? '<div class="card"><div class="ct">점수</div><div class="kv"><span>평균 점수</span><b>' + c.avg + '점</b></div><div class="kv"><span>3점 이하인 날</span><b>' + c.lowDays + '/' + c.nsc + '일</b></div></div>' : '';
+  var why = weakReasons(x), tip = x.row.kind === 'p' ? TIPS.p : TIPS[id];
+  var adv = '<div class="card"><div class="ct">이렇게 해 보세요</div>' + (why.length ? '<p class="muted" style="margin:0 0 6px">' + why.join(' · ') + '</p>' : '') + '<p style="margin:0;font-weight:700">→ ' + tip + '</p></div>';
+  var recs = ctx.all.filter(function (r) { return r.d >= ctx.start; });
+  var detail = x.row.kind === 'item' ? '<h2 class="sub cs">날짜별 기록</h2>' + itemView(id, recs) : '';
+  return back + '<h2 class="sub">' + esc(x.row.name) + '</h2>' + tiles1 + dl + '<h2 class="sub cs">체크표</h2>' + gridView(recs, ctx.n, id) + wds + sc + adv + detail;
+}
+function logDayModal() {
+  if (!logDay) return '';
+  var rec = logRecords().filter(function (r) { return r.d === logDay; })[0];
+  if (!rec) return '';
+  return '<div class="modal" role="dialog" aria-modal="true" aria-label="' + dayLabel(rec.d) + ' 기록"><div class="bd" data-act="log-day-close"></div><div class="sheet">' + dayView([rec]) +
+    '<div style="margin-top:12px"><button class="btn ghost" data-act="log-day-close">닫기</button></div></div></div>';
+}
 VIEWS.log = function () {
-  var recs = logRecords();
-  var view = LOGVIEWS.some(function (v) { return v[0] === S.logView; }) ? S.logView : 'day';
-  var act = recs.filter(function (r) { return cnt(r) > 0; });
-  var avg = act.length ? Math.round(act.reduce(function (a, r) { return a + cnt(r); }, 0) / act.length * 10) / 10 : 0;
-  var hasSample = recs.some(function (r) { return r.sample; });
-  var seg = '<div class="seg3" role="group" aria-label="기록 보기 방식">' + LOGVIEWS.map(function (v) {
+  var n = S.logRange || 7, ctx = logCtx(n), recs = ctx.all.filter(inRange);
+  var view = LOGTABS.some(function (v) { return v[0] === S.logView; }) ? S.logView : 'sum';
+  var hasSample = ctx.all.some(function (r) { return r.sample; });
+  var seg = '<div class="seg3 t3" role="group" aria-label="기록 보기 방식">' + LOGTABS.map(function (v) {
     return '<button data-act="log-view" data-v="' + v[0] + '" aria-pressed="' + (view === v[0]) + '">' + v[1] + '</button>';
   }).join('') + '</div>';
-  var top = view === 'day'
-    ? '<div class="stats"><div class="stat"><span class="h">' + act.length + '</span><span>기록한 날</span></div><div class="stat"><span class="h">' + avg + '</span><span>평균 완료</span></div><div class="stat"><span class="h">' + recs.filter(function (r) { return r.late; }).length + '</span><span>지각</span></div></div>'
-    : '';
-  var body = view === 'day' ? dayView(recs) : itemView(view, recs);
-  return '<div class="screen">' + brandRow() + '<h2 class="sub">루틴 기록</h2>' + seg + top +
+  var rng = '<div class="seg3 r3" role="group" aria-label="기간">' + [[7, '최근 7일'], [30, '30일'], [90, '90일']].map(function (v) {
+    return '<button data-act="log-range" data-v="' + v[0] + '" aria-pressed="' + (n === v[0]) + '">' + v[1] + '</button>';
+  }).join('') + '</div>';
+  var body = view === 'grid' ? gridView(recs, n) : (view === 'items' ? (logItem ? itemDetail(ctx, logItem) : itemsView(ctx)) : sumView(ctx));
+  return '<div class="screen">' + brandRow() + '<h2 class="sub">루틴 기록</h2>' + seg + rng +
     '<div class="pt">' + (hasSample ? EXTAG + ' <button class="btn ghost sm" data-act="toggle-sample-log">예시 기록 숨기기</button>' : (S.hideSampleLog ? '<button class="btn ghost sm" data-act="toggle-sample-log">예시 기록 보기</button>' : '')) + '</div>' +
-    body + '<p class="note">이 기기에 저장된 기록이에요. 날짜가 바뀌면 오늘 완료 상태는 새로 시작해요.</p></div>' + tabbar('log');
+    body + '<p class="note">이 기기에 저장된 기록이에요. 날짜가 바뀌면 오늘 완료 상태는 새로 시작해요.</p></div>' + tabbar('log') + logDayModal();
 };
 VIEWS.admin = function () {
   var me = S.done.attend ? hm(S.done.attend.at) : null;
@@ -779,7 +1208,7 @@ VIEWS.admin = function () {
 /* ---------- 설정: 저장 위치 확인과 엑셀 내보내기 ---------- */
 var exportFail = false, exportMsg = '';
 var XLS_COLS = ['날짜', '요일', '구분', '완료 항목 수', '출근 완료', '출근 시각', '출근 상태', '교육 확인', '내일 교육 응답', '계획 점검', '일정 완료', '일정 전체', '일정 달성률',
-  '목표 점검', '목표 이름', '목표 현재', '목표 값', '목표 달성률', '고객 확인', '진행 고객 수', '계약 고객 수', '멘탈 점검', '감정 점수', '몸 점수', '실행한 행동 수', '집중 점검', '방향성 점수', '몰입도 점수', '방해 요인', '오늘의 한 가지', '한 가지 완료', '오전 방향성', '오전 몰입도', '오후 방향성', '오후 몰입도', '선언 읽음 횟수'];
+  '목표 점검', '목표 이름', '목표 현재', '목표 값', '목표 달성률', '고객 확인', '진행 고객 수', '계약 고객 수', '멘탈 점검', '감정 점수', '몸 점수', '실행한 행동 수', '집중 점검', '방향성 점수', '몰입도 점수', '방해 요인', '오늘의 한 가지', '한 가지 완료', '오전 방향성', '오전 몰입도', '오후 방향성', '오후 몰입도', '선언 읽음 횟수', '멘탈 관리 평균', '집중 관리 평균', '개인루틴', '내면 대화 점검', '노력 인정 점수', '말투 점수', '오늘의 인정 한 줄', '내면 대화 평균'];
 function exportRows() {
   var recs = logRecords().slice().sort(function (a, b) { return a.d < b.d ? -1 : 1; });
   return recs.map(function (r) {
@@ -794,7 +1223,10 @@ function exportRows() {
       c[6] ? 'O' : 'X', dt.f && dt.f.dir ? dt.f.dir : '', dt.f && dt.f.dir ? dt.f.imm : '',
       dt.f && dt.f.why ? whyLabels(dt.f.why).join(', ') : '', dt.f && dt.f.one ? dt.f.one : '', dt.f && dt.f.one ? (dt.f.od ? 'O' : 'X') : '',
       dt.f && dt.f.am && dt.f.am[0] ? dt.f.am[0] : '', dt.f && dt.f.am && dt.f.am[0] ? dt.f.am[1] : '', dt.f && dt.f.pm && dt.f.pm[0] ? dt.f.pm[0] : '', dt.f && dt.f.pm && dt.f.pm[0] ? dt.f.pm[1] : '',
-      dt.dc == null ? '' : dt.dc];
+      dt.dc == null ? '' : dt.dc,
+      dt.m && dt.m.emo ? avg2(dt.m.emo, dt.m.body) : '', dt.f && dt.f.dir ? avg2(dt.f.dir, dt.f.imm) : '',
+      dt.p && dt.p.length ? dt.p.map(function (q) { return q.n + ': ' + (q.t === 'check' ? (q.v ? 'O' : 'X') : (q.v || '-')); }).join(', ') : '',
+      c[7] ? 'O' : 'X', dt.s && dt.s.eff ? dt.s.eff : '', dt.s && dt.s.eff ? dt.s.kind : '', dt.s && dt.s.line ? dt.s.line : '', dt.s && dt.s.eff ? avg2(dt.s.eff, dt.s.kind) : ''];
   });
 }
 var CRC_T = (function () { var t = [], n, k, c; for (n = 0; n < 256; n++) { c = n; for (k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
@@ -828,7 +1260,7 @@ function buildXlsx() {
   }
   var sd = '<row r="1">' + XLS_COLS.map(function (h, i) { return cell(h, i, 0, true); }).join('') + '</row>' +
     rows.map(function (r, k) { return '<row r="' + (k + 2) + '">' + r.map(function (v, i) { return cell(v, i, k + 1); }).join('') + '</row>'; }).join('');
-  var widths = [12, 6, 16, 12, 9, 10, 10, 9, 14, 9, 9, 9, 11, 9, 12, 9, 8, 11, 9, 11, 11, 9, 9, 9, 12, 9, 10, 10, 20, 22, 9, 10, 10, 10, 10, 11];
+  var widths = [12, 6, 16, 12, 9, 10, 10, 9, 14, 9, 9, 9, 11, 9, 12, 9, 8, 11, 9, 11, 11, 9, 9, 9, 12, 9, 10, 10, 20, 22, 9, 10, 10, 10, 10, 11, 12, 12, 30, 11, 11, 10, 28, 12];
   var X = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n';
   return zipStore([
     { name: '[Content_Types].xml', data: X + '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>' },
@@ -851,21 +1283,121 @@ function storageInfo() {
 function fmtDT(t) { var d = new Date(t); return dstr(t) + ' ' + hm(t); }
 function fmtSize(b) { return b < 1024 ? b + ' B' : (Math.round(b / 102.4) / 10) + ' KB'; }
 function canOverlay() { try { return !!AndroidBridge.canOverlay(); } catch (e) { return false; } }
+var driveMsg = '';
+function driveCard() {
+  var kv = function (k, v) { return '<div class="kv"><span>' + k + '</span><b>' + v + '</b></div>'; };
+  return '<div class="card"><div class="ct">구글 드라이브 연결</div>' +
+    kv('연결 상태', '<span class="late">연결 안 됨</span>') + kv('연결 계정', '-') + kv('마지막 동기화', '아직 없음') +
+    '<p class="note" style="margin:10px 0 0">구글 드라이브에 연결하면 루틴 기록을 내 드라이브에 보관하고, 다른 기기에서도 이어서 볼 수 있어요.</p>' +
+    '<div style="margin-top:12px"><button class="btn" data-act="drive-connect"><span>구글 드라이브 연결하기</span></button></div>' +
+    '<div style="margin-top:8px"><button class="btn ghost" data-act="drive-sync"><span>지금 동기화</span></button></div>' +
+    (driveMsg ? '<p class="note" style="margin-top:10px">' + driveMsg + '</p>' : '<p class="note" style="margin-top:10px">' + EXTAG.replace('예시 데이터입니다', '준비 중') + ' 연결 기능은 아직 만드는 중이에요.</p>') + '</div>';
+}
 function lockCard() {
   var on = !!S.lockShow, ov = canOverlay(), kv = function (k, v) { return '<div class="kv"><span>' + k + '</span><b>' + v + '</b></div>'; };
   return '<div class="card"><div class="ct">잠금화면 · 다른 앱 위에 표시</div>' +
     '<div class="swr"><b>잠금화면 위에 표시</b><button class="sw" role="switch" aria-checked="' + on + '" aria-label="잠금화면 위에 표시" data-act="lock-toggle"></button></div>' +
     '<p class="note" style="margin:4px 0 0">켜면 화면이 잠겨 있어도 알림 창의 오늘 진행 상황이 보이고, 알림을 눌렀을 때 잠금을 풀지 않고 앱이 먼저 열려요.</p>' +
-    kv('다른 앱 위에 표시 권한', ov ? '<span class="ok">허용됨</span>' : '<span class="late">허용 안 됨</span>') +
-    (ov ? '' : '<p class="note" style="margin:10px 0 0">아래 버튼을 눌러 열리는 화면에서 \'ELITE 루틴\'을 찾아 허용해 주세요.</p>') +
+    kv('다른 앱 위에 표시 권한', window.AndroidBridge ? (ov ? '<span class="ok">허용됨</span>' : '<span class="late">허용 안 됨</span>') : '앱에서 확인') +
+    (ov ? '' : '<p class="note" style="margin:10px 0 0">아래 버튼을 눌러 열리는 화면에서 \'ELITE 루틴\'을 찾아 허용해 주세요.</p>') + (window.AndroidBridge ? '' : '<p class="note" style="margin:10px 0 0">웹에서는 미리보기예요. 안드로이드 앱(APK)에서 실제로 작동해요.</p>') +
     '<div style="margin-top:12px"><button class="btn ghost" data-act="overlay-open"><span>' + (ov ? '다른 앱 위에 표시 설정 열기' : '다른 앱 위에 표시 켜기') + '</span></button></div></div>';
 }
+function downloadXlsx() {
+    var fname = 'ELITE_루틴기록_' + dstr(now()) + '.xlsx', blob;
+    try { blob = buildXlsx(); } catch (er) { exportFail = true; render(); return; }
+    function done() { S.lastExport = now(); exportFail = false; exportMsg = ''; save(); render(); }
+    function viaLink() {
+      if (window.AndroidBridge) {
+        var rd = new FileReader();
+        rd.onload = function () { var ok = false; try { ok = AndroidBridge.saveFile(fname, String(rd.result).split(',')[1]); } catch (e) { } if (ok) done(); else { exportFail = true; render(); } };
+        rd.readAsDataURL(blob); return;
+      }
+      try {
+        var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fname;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000); done();
+      } catch (er) { exportFail = true; render(); }
+    }
+    var cl = window.claude && window.claude.use ? window.claude.use('downloads') : null;
+    if (cl && cl.then) {
+      cl.then(function (dl) {
+        if (!dl) { viaLink(); return; }
+        dl.save({ filename: fname, data: blob }).then(done, function (er) {
+          if (er && er.code === 'declined') { exportMsg = '저장을 취소했어요.'; render(); } else { exportFail = true; render(); }
+        });
+      }, viaLink);
+    } else viaLink();
+}
+/* ---------- 저장 폴더 선택 + 엑셀 저장 ---------- */
+var saveIssue = '', noticeOff = false, focusPick = '';
+function checkSaveFile() {
+  if (!fsOK()) { saveIssue = ''; return Promise.resolve(); }
+  var done = function () { var r = route(); if (r === 'home' || r === 'settings') render(); };
+  if (!dirH) { saveIssue = 'nodir'; done(); return Promise.resolve(); }
+  return Promise.resolve(dirH.queryPermission({ mode: 'readwrite' })).then(function (pm) {
+    dirPerm = pm;
+    if (pm !== 'granted') { saveIssue = 'perm'; return; }
+    return dirH.getFileHandle(FS_FILE).then(function () { saveIssue = ''; }, function (er) { saveIssue = er && er.name === 'NotFoundError' ? 'nofile' : 'perm'; });
+  }, function () { saveIssue = 'perm'; }).then(done);
+}
+function noticeBar() {
+  if (!saveIssue || noticeOff) return '';
+  var msg = { nodir: '데이터를 저장할 폴더가 아직 정해지지 않았어요. 폴더를 고르면 기록을 엑셀 파일로 보관해요.',
+    nofile: '저장해 오던 엑셀 파일(' + FS_FILE + ')을 폴더에서 찾을 수 없어요. 폴더를 다시 선택해 주세요.',
+    perm: '저장 폴더에 접근하려면 확인이 필요해요. 설정에서 저장 버튼을 눌러 허용해 주세요.' }[saveIssue];
+  return '<div class="alertbar" role="alert"><p>' + msg + '</p><button class="btn xs" data-act="goto-pick"><span>' + (saveIssue === 'perm' ? '설정으로' : '폴더 선택') + '</span></button><button class="ib2" data-act="notice-x" aria-label="알림 닫기">' + ic('x') + '</button></div>';
+}
+var FS_FILE = 'ELITE_루틴기록.xlsx';
+var dirH = null, dirPerm = '', autoTimer = null;
+function fsOK() { return typeof window.showDirectoryPicker === 'function'; }
+function idb(op, val) {
+  return new Promise(function (res) {
+    try {
+      var q = indexedDB.open('elite-fs', 1);
+      q.onupgradeneeded = function () { q.result.createObjectStore('k'); };
+      q.onerror = function () { res(null); };
+      q.onsuccess = function () {
+        try {
+          var os = q.result.transaction('k', op === 'get' ? 'readonly' : 'readwrite').objectStore('k');
+          var r = op === 'get' ? os.get('dir') : (op === 'set' ? os.put(val, 'dir') : os.delete('dir'));
+          r.onsuccess = function () { res(r.result || null); }; r.onerror = function () { res(null); };
+        } catch (e) { res(null); }
+      };
+    } catch (e) { res(null); }
+  });
+}
+function writeFolder(silent) {
+  if (!dirH) return Promise.reject({ code: 'nodir' });
+  var blob; try { blob = buildXlsx(); } catch (e) { return Promise.reject({ code: 'build' }); }
+  return Promise.resolve(dirH.queryPermission({ mode: 'readwrite' })).then(function (pm) {
+    if (pm === 'granted') return pm;
+    dirPerm = pm;
+    if (silent) throw { code: 'perm' };
+    return dirH.requestPermission({ mode: 'readwrite' }).then(function (q) { if (q !== 'granted') throw { code: 'perm' }; return q; });
+  }).then(function () { dirPerm = 'granted'; return dirH.getFileHandle(FS_FILE, { create: true }); })
+    .then(function (fh) { return fh.createWritable(); })
+    .then(function (w) { return Promise.resolve(w.write(blob)).then(function () { return w.close(); }); })
+    .then(function () { skipAuto = true; S.lastExport = now(); save(); skipAuto = false; saveIssue = ''; });
+}
+function schedAuto() {
+  if (!dirH) return;
+  clearTimeout(autoTimer);
+  autoTimer = setTimeout(function () {
+    writeFolder(true).then(function () { if (route() === 'settings') render(); }, function () { dirPerm = 'prompt'; if (route() === 'settings') render(); });
+  }, 5000);
+}
+if (fsOK()) idb('get').then(function (h) {
+  if (h && h.queryPermission) { dirH = h; if (!S.saveDirName) S.saveDirName = h.name; }
+  checkSaveFile();
+}); else saveIssue = '';
+var lastChk = 0;
+window.addEventListener('focus', function () { if (fsOK() && now() - lastChk > 3000) { lastChk = now(); checkSaveFile(); } });
 VIEWS.settings = function () {
   var st = storageInfo(), recs = logRecords(), real = recs.filter(function (r) { return !r.sample; }).length, smp = recs.length - real;
   var kv = function (k, v) { return '<div class="kv"><span>' + k + '</span><b>' + v + '</b></div>'; };
   var ex = S.lastExport ? fmtDT(S.lastExport) : '아직 없음';
   var weekWarn = !S.lastExport || (now() - S.lastExport) > 7 * 86400000;
-  return '<div class="screen">' + brandRow() + '<h2 class="sub">설정</h2>' +
+  return '<div class="screen">' + brandRow() + noticeBar() + '<h2 class="sub">설정</h2>' +
     '<div class="card"><div class="ct">저장 위치 확인</div>' +
     kv('저장 위치', '이 브라우저 안 (localStorage)') +
     kv('저장 상태', st.ok ? '<span class="ok">정상 작동</span>' : '<span class="no">저장 불가 (닫으면 사라져요)</span>') +
@@ -875,16 +1407,22 @@ VIEWS.settings = function () {
     kv('기록 일수', '실제 ' + real + '일' + (smp ? ' · 예시 ' + smp + '일' : '')) +
     '<p class="note" style="margin-top:10px">기록은 서버로 보내지 않고 이 기기의 이 브라우저에만 저장돼요. 브라우저 데이터를 지우거나 다른 기기로 열면 보이지 않아요. 아래에서 엑셀 파일로 저장해 두세요.</p></div>' +
     '<div class="card"><div class="ct">루틴 기록 파일로 저장</div>' +
-    kv('파일 형식', '엑셀 (.xlsx)') + kv('구성', '하루 1행 · 전체 기간') + kv('저장할 행', recs.length + '일') + kv('마지막 내보내기', ex) +
-    '<div style="margin-top:12px"><button class="btn" data-act="export-xlsx">' + ic('dl') + '<span>엑셀로 내보내기</span></button></div>' +
+    kv('파일 형식', '엑셀 (.xlsx)') + kv('구성', '하루 1행 · 전체 기간') + kv('저장할 행', recs.length + '일') +
+    kv('저장 폴더', dirH ? '<b>' + esc(S.saveDirName || dirH.name) + '</b>' + (dirPerm === 'granted' ? '' : ' <span class="late">확인 필요</span>') : (S.saveDirName ? esc(S.saveDirName) + ' <span class="late">다시 선택 필요</span>' : '선택 안 함 · 다운로드 폴더')) +
+    kv('저장 파일', !fsOK() ? '해당 없음' : (saveIssue === 'nodir' ? '<span class="late">폴더 없음</span>' : (saveIssue === 'nofile' ? '<span class="late">파일 없음</span>' : (saveIssue === 'perm' ? '<span class="late">확인 필요</span>' : '<span class="ok">있음</span>')))) + kv('파일 이름', dirH ? '<code>' + FS_FILE + '</code>' : '<code>ELITE_루틴기록_날짜.xlsx</code>') + kv('마지막 저장', ex) +
+    (dirH ? '<div class="swr"><b>기록이 바뀌면 자동 저장</b><button class="sw" role="switch" aria-checked="' + !!S.autoSave + '" aria-label="기록이 바뀌면 자동 저장" data-act="auto-toggle"></button></div>' +
+      '<p class="note" style="margin:4px 0 0">켜면 기록을 바꾼 뒤 몇 초 지나 같은 파일에 덮어써요. 브라우저를 다시 열면 폴더 접근을 한 번 더 허용해야 할 수 있어요.</p>' : '') +
+    '<div style="margin-top:12px"><button class="btn" data-act="export-xlsx">' + ic('dl') + '<span>' + (dirH ? '선택한 폴더에 엑셀로 저장' : '엑셀로 내보내기') + '</span></button></div>' +
+    '<div style="margin-top:8px;display:grid;grid-template-columns:' + (dirH ? '1fr 1fr' : '1fr') + ';gap:8px"><button class="btn ghost" data-act="dir-pick"><span>' + (dirH ? '폴더 변경' : '저장 폴더 선택') + '</span></button>' + (dirH ? '<button class="btn ghost" data-act="dir-clear"><span>폴더 해제</span></button>' : '') + '</div>' +
+    (!fsOK() ? '<p class="note" style="margin-top:10px">' + (window.AndroidBridge ? '안드로이드 앱에서는 파일이 휴대폰의 \'다운로드\' 폴더에 저장돼요. 폴더 선택은 앱 업데이트에서 지원할 예정이에요.' : '이 브라우저(또는 이 화면)에서는 폴더를 직접 고를 수 없어요. 저장하면 브라우저의 다운로드 폴더로 받아져요. 폴더 선택은 PC의 크롬·엣지에서 이 앱을 새 탭으로 열면 쓸 수 있어요.') + '</p>' : '<p class="note" style="margin-top:10px">폴더 선택 창은 기본으로 문서(Documents) 폴더에서 열려요. 문서 폴더 자체는 브라우저가 막을 수 있어서, 그 안에 새 폴더(예: ELITE 기록)를 만들어 선택해 주세요.</p>') +
     (exportMsg ? '<p class="note" style="margin-top:10px">' + exportMsg + '</p>' : '') +
     (exportFail ? '<p class="note" style="margin-top:10px;color:var(--brand-text)">파일을 만들지 못했어요. 다시 시도해 주세요.</p>' : '') +
     (weekWarn ? '<p class="note" style="margin-top:10px">일주일에 한 번 정도 파일로 저장해 두면 안전해요.</p>' : '') +
     (smp ? '<p class="note">예시 기록도 \'예시\'로 표시되어 함께 저장돼요. 빼려면 기록 화면에서 \'예시 기록 숨기기\'를 누르세요.</p>' : '') + '</div>' +
-    (window.AndroidBridge ? '<div class="card"><div class="ct">알림 창 표시</div>' + kv('오늘의 루틴 알림', S.notifOn === false ? '꺼짐' : '<span class="ok">켜짐</span>') +
+    ('<div class="card"><div class="ct">알림 창 표시</div>' + kv('오늘의 루틴 알림', S.notifOn === false ? '꺼짐' : '<span class="ok">켜짐</span>') +
       '<p class="note" style="margin-top:10px">휴대폰 알림 창에 오늘의 진행 상황(예: 3/6)과 다음 할 일을 보여줘요. 누르면 앱이 열려요.</p>' +
-      '<div style="margin-top:12px"><button class="btn ghost" data-act="notif-toggle"><span>' + (S.notifOn === false ? '알림 켜기' : '알림 끄기') + '</span></button></div></div>' : '') +
-    (window.AndroidBridge && AndroidBridge.setLockShow ? lockCard() : '') +
+      '<div style="margin-top:12px"><button class="btn ghost" data-act="notif-toggle"><span>' + (S.notifOn === false ? '알림 켜기' : '알림 끄기') + '</span></button></div>' + (window.AndroidBridge ? '' : '<p class="note" style="margin-top:10px">웹에서는 미리보기예요. 안드로이드 앱(APK)에서 실제로 작동해요.</p>') + '</div>') +
+    lockCard() + driveCard() +
     '<div class="card"><div class="ct">엑셀 열 구성</div><p class="note" style="margin:0">' + XLS_COLS.join(' · ') + '</p></div></div>' + tabbar('settings');
 };
 
@@ -902,6 +1440,10 @@ var SVGS = {
   rewrite: '<circle class="ac" cx="52" cy="38" r="26" opacity=".35"/><circle class="ac" cx="52" cy="38" r="15" opacity=".6"/><circle class="af" cx="52" cy="38" r="5"/><path d="M66 18l22-6-6 22z"/><path d="M84 14L56 36"/>',
   three: '<circle class="af" cx="32" cy="18" r="6"/><circle cx="32" cy="38" r="6"/><circle cx="32" cy="58" r="6"/><path d="M46 18h44M46 38h36M46 58h28"/>',
   phone: '<rect x="42" y="8" width="36" height="60" rx="6"/><path d="M56 60h8"/><path class="ac" d="M28 14l64 48"/>',
+  proud3: '<path class="ac" d="M28 18l4 4 8-9M28 38l4 4 8-9M28 58l4 4 8-9"/><path d="M52 20h44M52 40h36M52 60h28"/>',
+  effort: '<path d="M24 66h76"/><rect x="30" y="46" width="12" height="20"/><rect x="52" y="34" width="12" height="32"/><rect class="af" x="74" y="20" width="12" height="46"/><path class="ac" d="M30 34l22-14 14 8 24-14"/>',
+  friend: '<circle class="af" cx="40" cy="24" r="9"/><circle cx="84" cy="24" r="9"/><path d="M24 58c2-14 30-14 32 0M68 58c2-14 30-14 32 0"/><path class="ac" d="M54 36l8 8 8-8"/>',
+  mirror: '<ellipse cx="60" cy="32" rx="22" ry="27"/><path class="ac" d="M50 28h.01M70 28h.01M50 42c6 6 14 6 20 0"/><path d="M60 59v8M48 68h24"/>',
   focus25: '<circle cx="60" cy="42" r="24"/><path class="ac" d="M60 42V28M60 42l10 6"/><path d="M52 12h16M60 12v6"/>',
   power: '<circle class="af" cx="60" cy="20" r="7"/><path d="M60 28v22M60 32L38 12M60 32L82 12M60 50l-18 18M60 50l18 18"/><path class="ac" d="M20 52l10-6M100 52l-10-6M24 36h10M86 36h10"/>'
 };
@@ -913,6 +1455,10 @@ var ACTS = {
   water: { t: '물 한 잔과 환기', m: 2, d: '물 한 잔을 천천히 마시고 창문을 열어 공기를 바꿔요. 몸이 무거울 때 가장 쉬운 첫 단계예요.' },
   stretch: { t: '목·어깨 풀기', m: 3, d: '고개를 좌우로 천천히 기울이고, 어깨를 크게 10번 돌려요. 양손을 깍지 껴 위로 쭉 뻗고 10초 유지해요.' },
   gratitude: { t: '잘한 일 3가지 적기', m: 3, d: '오늘 잘한 일이나 고마웠던 일을 3가지 적어요. 계약이 아니어도 괜찮아요. 전화 한 통 건 것도 충분해요.' },
+  proud3: { g: 'self', t: '잘한 일 3가지 쓰기', m: 3, d: '오늘 한 일 중 잘한 것 세 가지를 메모에 적어요. 아주 작아도 돼요. 예) 약속 시간에 맞춰 도착했다, 전화를 한 통 더 걸었다.' },
+  effort: { g: 'self', t: '결과 말고 노력 인정하기', m: 2, d: "결과가 아쉬웠던 일 하나를 떠올려요. '결과는 아쉽지만 나는 ○○하려고 애썼다'고 소리 내어 말해요. 결과와 노력은 따로 봐도 돼요." },
+  friend: { g: 'self', t: '친구에게 하듯 말하기', m: 2, d: '지금 내가 겪는 일을 친한 친구가 겪고 있다면 뭐라고 해 줄지 떠올려요. 그 말을 그대로 나에게 해 줘요.' },
+  mirror: { g: 'self', t: '거울 보고 한마디', m: 1, d: "거울이나 휴대폰 화면 속 나를 보고 '오늘도 해냈다, 수고했다'고 말해요. 1분이면 충분해요." },
   rewrite: { g: 'focus', t: '핵심 목표 다시 쓰기', m: 3, d: "지금 가장 중요한 목표를 한 줄로 다시 써요. '언제까지, 무엇을, 몇 건'처럼 숫자가 들어가면 더 뚜렷해져요. 위의 '내 핵심 목표'에 바로 저장해요." },
   three: { g: 'focus', t: '오늘 할 일 3개로 줄이기', m: 3, d: '오늘 일정에서 핵심 목표에 가장 가까운 일 3개만 남기고 나머지는 내일로 미뤄요. 일정 화면에서 지우거나 정리할 수 있어요.' },
   phone: { g: 'focus', t: '휴대폰 치우기', m: 2, d: '휴대폰을 방해 금지로 바꾸고 가방이나 서랍에 넣어요. 꼭 필요한 알림만 남겨 두면 몰입이 훨씬 쉬워져요.' },
@@ -1039,17 +1585,25 @@ function syncNotif() {
 window.permBack = function () { if (route() === 'settings') render(); };
 function render() {
   rollover();
-  var r = route(); if (lastRoute !== r) { declEdit = false; editCore = false; }
+  var r = route(); if (lastRoute !== r && r === 'settings' && saveIssue && !noticeOff && !focusPick) focusPick = saveIssue === 'perm' ? 'export-xlsx' : 'dir-pick';
+  if (lastRoute !== r) { declEdit = false; editCore = false; pEdit = null; pDel = false; logDay = null; logItem = null; }
   var _r = r, sc = app.querySelector('.screen');
   var top = (sc && lastRoute === r) ? sc.scrollTop : 0;
   app.innerHTML = VIEWS[r]();
   var ns = app.querySelector('.screen'); if (ns) ns.scrollTop = top;
+  var gx = app.querySelector('.gx'); if (gx) { var gk = r + (S.logRange || 7) + (S.logView || ''); gx.scrollLeft = gxKey === gk ? gxLeft : gx.scrollWidth; gxKey = gk; gxLeft = gx.scrollLeft; }
   lastRoute = r; declFlash = false;
+  if (focusPick && r === 'settings') {
+    var fb = app.querySelector('[data-act="' + focusPick + '"]');
+    if (fb) { try { fb.scrollIntoView({ block: 'center' }); fb.focus({ preventScroll: true }); } catch (er) { } fb.classList.add('pulse'); }
+    focusPick = '';
+  }
   syncNotif();
 }
 window.addEventListener('hashchange', render);
 
 /* ---------- 동작 ---------- */
+app.addEventListener('scroll', function (e) { if (e.target.classList && e.target.classList.contains('gx')) gxLeft = e.target.scrollLeft; }, true);
 function afterAdd(sel) { var el = app.querySelector(sel); if (el) el.focus(); }
 app.addEventListener('click', function (e) {
   var el = e.target.closest('[data-act]'); if (!el) return;
@@ -1071,33 +1625,37 @@ app.addEventListener('click', function (e) {
     if (dlInfo().locked) { render(); return; }   // 마감 후에는 응답 불가
     S.answer = { v: el.getAttribute('data-v'), at: now() }; save(); render(); return;
   }
-  if (act === 'export-xlsx') {
-    var fname = 'ELITE_루틴기록_' + dstr(now()) + '.xlsx', blob;
-    try { blob = buildXlsx(); } catch (er) { exportFail = true; render(); return; }
-    function done() { S.lastExport = now(); exportFail = false; exportMsg = ''; save(); render(); }
-    function viaLink() {
-      if (window.AndroidBridge) {
-        var rd = new FileReader();
-        rd.onload = function () { var ok = false; try { ok = AndroidBridge.saveFile(fname, String(rd.result).split(',')[1]); } catch (e) { } if (ok) done(); else { exportFail = true; render(); } };
-        rd.readAsDataURL(blob); return;
-      }
-      try {
-        var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = fname;
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000); done();
-      } catch (er) { exportFail = true; render(); }
-    }
-    var cl = window.claude && window.claude.use ? window.claude.use('downloads') : null;
-    if (cl && cl.then) {
-      cl.then(function (dl) {
-        if (!dl) { viaLink(); return; }
-        dl.save({ filename: fname, data: blob }).then(done, function (er) {
-          if (er && er.code === 'declined') { exportMsg = '저장을 취소했어요.'; render(); } else { exportFail = true; render(); }
-        });
-      }, viaLink);
-    } else viaLink();
+  if (act === 'notice-x') { noticeOff = true; render(); return; }
+  if (act === 'goto-pick') { focusPick = saveIssue === 'perm' ? 'export-xlsx' : 'dir-pick'; if (route() === 'settings') render(); else location.hash = '#settings'; return; }
+  if (act === 'dir-pick') {
+    if (!fsOK()) { exportMsg = '이 브라우저(또는 이 화면)에서는 폴더를 직접 고를 수 없어요. 지금은 저장하면 다운로드 폴더로 받아져요.'; render(); return; }
+    try {
+      window.showDirectoryPicker({ id: 'elite-routine', mode: 'readwrite', startIn: 'documents' }).then(function (h) {
+        dirH = h; dirPerm = 'granted'; S.saveDirName = h.name; idb('set', h); exportMsg = '저장 폴더를 \'' + h.name + '\'(으)로 정했어요.'; exportFail = false; save(); render();
+        writeFolder(true).then(function () { saveIssue = ''; exportMsg = '\'' + h.name + '\' 폴더에 ' + FS_FILE + '을(를) 만들어 저장했어요.'; render(); }, function () { checkSaveFile(); });
+      }, function (er) {
+        if (er && er.name === 'AbortError') return;
+        exportMsg = er && er.name === 'SecurityError' ? '이 화면에서는 폴더 선택이 막혀 있어요. 앱을 새 탭(전체 화면)으로 열어서 다시 시도해 주세요.' : '폴더를 선택하지 못했어요. 다른 폴더를 골라 주세요.';
+        render();
+      });
+    } catch (er) { exportMsg = '이 화면에서는 폴더 선택이 막혀 있어요. 앱을 새 탭(전체 화면)으로 열어서 다시 시도해 주세요.'; render(); }
     return;
   }
+  if (act === 'dir-clear') { dirH = null; dirPerm = ''; S.saveDirName = ''; S.autoSave = false; idb('del'); noticeOff = false; saveIssue = fsOK() ? 'nodir' : ''; exportMsg = '저장 폴더 설정을 해제했어요. 이제 다운로드 폴더로 저장돼요.'; save(); render(); return; }
+  if (act === 'auto-toggle') { S.autoSave = !S.autoSave; save(); if (S.autoSave) schedAuto(); render(); return; }
+  if (act === 'export-xlsx' && dirH) {
+    writeFolder(false).then(function () {
+      exportFail = false; exportMsg = '\'' + (S.saveDirName || dirH.name) + '\' 폴더에 ' + FS_FILE + '(으)로 저장했어요. (' + fmtDT(now()) + ')'; render();
+    }, function (er) {
+      if (er && er.code === 'perm') exportMsg = '폴더 접근이 허용되지 않았어요. 다시 눌러서 허용해 주세요.';
+      else { exportMsg = '선택한 폴더에 저장하지 못해서 다운로드로 받았어요.'; exportFail = false; }
+      render();
+      if (!(er && er.code === 'perm')) downloadXlsx();
+    });
+    return;
+  }
+  if (act === 'export-xlsx') { downloadXlsx(); return; }
+  if (act === 's-score') { S.self[el.getAttribute('data-k')] = +el.getAttribute('data-v'); save(); render(); return; }
   if (act === 'm-score') { S.mental[el.getAttribute('data-k')] = +el.getAttribute('data-v'); save(); render(); return; }
   if (act === 'f-score') { S.focus.slots[curSlot()][el.getAttribute('data-k')] = +el.getAttribute('data-v'); recomputeFocus(); save(); render(); return; }
   if (act === 'f-slot') { fslot = el.getAttribute('data-v'); render(); return; }
@@ -1106,6 +1664,23 @@ app.addEventListener('click', function (e) {
   if (act === 'f-one-clear') { S.focus.one = { text: '', done: false }; save(); render(); afterAdd('input[name="one"]'); return; }
   if (act === 'core-edit') { editCore = true; render(); afterAdd('input[name="goal"]'); return; }
   if (act === 'decl-read') { S.decl.today++; S.decl.total++; declFlash = true; save(); try { if (navigator.vibrate) navigator.vibrate(15); } catch (er) { } render(); return; }
+  if (act === 'sec-toggle') { var sk = el.getAttribute('data-k'); secOpen[sk] = !secOpen[sk]; render(); return; }
+  if (act === 'p-add') { if (S.mine.length >= PMAX) return; pEdit = 'new'; pType = 'check'; pName = ''; pDel = false; render(); afterAdd('#pName'); return; }
+  if (act === 'p-edit') { pEdit = id; pDel = false; render(); afterAdd('#pName'); return; }
+  if (act === 'p-cancel') { pEdit = null; pDel = false; render(); return; }
+  if (act === 'p-type') { var pn0 = document.getElementById('pName'); if (pn0) pName = pn0.value; pType = el.getAttribute('data-v'); render(); afterAdd('#pName'); return; }
+  if (act === 'p-save') {
+    var pn = document.getElementById('pName'), nm = pn ? pn.value.trim().slice(0, 20) : ''; if (!nm) { if (pn) pn.focus(); return; }
+    if (pEdit === 'new') { if (S.mine.length < PMAX) S.mine.push({ id: 'm' + now().toString(36) + Math.floor(Math.random() * 1000), name: nm, type: pType }); }
+    else S.mine.forEach(function (m) { if (m.id === pEdit) m.name = nm; });
+    pEdit = null; pDel = false; save(); render(); return;
+  }
+  if (act === 'p-del') {
+    if (!pDel) { pDel = true; render(); return; }
+    S.mine = S.mine.filter(function (m) { return m.id !== pEdit; }); delete S.mineV[pEdit]; pEdit = null; pDel = false; save(); render(); return;
+  }
+  if (act === 'p-check') { if (S.mineV[id]) delete S.mineV[id]; else S.mineV[id] = 1; save(); render(); return; }
+  if (act === 'p-score') { var pk = el.getAttribute('data-k'), pv = +el.getAttribute('data-v'); if (S.mineV[pk] === pv) delete S.mineV[pk]; else S.mineV[pk] = pv; save(); render(); return; }
   if (act === 'decl-edit') { declEdit = true; render(); afterAdd('#declTa'); return; }
   if (act === 'decl-cancel') { declEdit = false; render(); return; }
   if (act === 'decl-fill') { var ta0 = app.querySelector('#declTa'); if (ta0) { ta0.value = DECL_EX[+el.getAttribute('data-v')]; ta0.dispatchEvent(new Event('input', { bubbles: true })); ta0.focus(); } return; }
@@ -1118,13 +1693,20 @@ app.addEventListener('click', function (e) {
   if (act === 'act-stop') { runAct = null; render(); return; }
   if (act === 'act-done') { var gs = S[(ACTS[id] || {}).g || 'mental'], pv = gs.acts[id]; gs.acts[id] = { at: now(), n: (pv ? pv.n : 0) + 1 }; runAct = null; save(); render(); return; }
   if (act === 'lock-toggle') { S.lockShow = !S.lockShow; save(); try { AndroidBridge.setLockShow(S.lockShow); } catch (er) { } syncNotif(); render(); return; }
+  if (act === 'drive-connect') { driveMsg = '구글 드라이브 연결은 아직 준비 중이에요. 만들어지면 여기서 계정을 골라 연결할 수 있어요.'; render(); return; }
+  if (act === 'drive-sync') { driveMsg = '아직 연결되지 않아 동기화할 수 없어요. 먼저 구글 드라이브를 연결해 주세요.'; render(); return; }
   if (act === 'overlay-open') { try { AndroidBridge.openOverlaySettings(); } catch (er) { } return; }
   if (act === 'notif-toggle') {
     S.notifOn = S.notifOn === false; save();
     try { if (S.notifOn === false) AndroidBridge.clearNotif(); } catch (er) { }
     render(); return;
   }
-  if (act === 'log-view') { S.logView = el.getAttribute('data-v'); save(); render(); return; }
+  if (act === 'log-open-item') { logItem = id; S.logView = 'items'; save(); render(); return; }
+  if (act === 'log-item-back') { logItem = null; render(); return; }
+  if (act === 'log-day') { logDay = el.getAttribute('data-d'); render(); return; }
+  if (act === 'log-day-close') { logDay = null; render(); return; }
+  if (act === 'log-range') { S.logRange = +el.getAttribute('data-v'); save(); render(); return; }
+  if (act === 'log-view') { S.logView = el.getAttribute('data-v'); logItem = null; save(); render(); return; }
   if (act === 'toggle-sample-log') { S.hideSampleLog = !S.hideSampleLog; save(); render(); return; }
   if (act === 'toggle-plan') { S.planDone[id] = !S.planDone[id]; save(); render(); return; }
   if (act === 'del-plan') { S.plan = S.plan.filter(function (x) { return x.id !== id; }); delete S.planDone[id]; save(); render(); return; }
@@ -1141,12 +1723,15 @@ app.addEventListener('click', function (e) {
     var k = el.getAttribute('data-k'); S[k] = S[k].filter(function (x) { return !x.sample; }); save(); render(); return;
   }
 });
+app.addEventListener('keydown', function (e) { if (e.key === 'Enter' && e.target && e.target.id === 'pName') { e.preventDefault(); var b = app.querySelector('[data-act="p-save"]'); if (b) b.click(); } });
 app.addEventListener('submit', function (e) {
   var f = e.target.closest('[data-form]'); if (!f) return; e.preventDefault();
   var kind = f.getAttribute('data-form'), uid = 'u' + now().toString(36) + Math.floor(Math.random() * 1000);
   if (kind === 'plan') {
     var title = f.elements.title.value.trim(); if (!title) { f.elements.title.focus(); return; }
     S.plan.push({ id: uid, title: title.slice(0, 40), time: f.elements.time.value || '' }); save(); render(); afterAdd('[data-form="plan"] input[name="title"]');
+  } else if (kind === 'selfline') {
+    S.self.line = f.elements.line.value.trim().slice(0, 60); save(); render();
   } else if (kind === 'core') {
     S.coreGoal = f.elements.goal.value.trim().slice(0, 60); editCore = false; save(); render();
   } else if (kind === 'one') {
@@ -1163,6 +1748,8 @@ app.addEventListener('input', function (e) {
 });
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && declEdit) { declEdit = false; render(); return; }
+  if (e.key === 'Escape' && logDay) { logDay = null; render(); return; }
+  if (e.key === 'Escape' && pEdit) { pEdit = null; pDel = false; render(); return; }
   if ((e.key === 'Enter' || e.key === ' ') && e.target && e.target.classList && e.target.classList.contains('decl')) { e.preventDefault(); e.target.click(); }
 });
 
