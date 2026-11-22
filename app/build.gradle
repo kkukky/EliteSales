@@ -6,8 +6,13 @@ android {
         applicationId "kr.elite.routine"
         minSdk 26
         targetSdk 34
-        versionCode 5
-        versionName "0.5-pilot"
+        versionCode 6
+        versionName "0.6-pilot"
+    }
+    flavorDimensions 'who'
+    productFlavors {
+        admin   { dimension 'who'; manifestPlaceholders = [appLabel: 'ELITE 루틴 (관리자)'] }
+        planner { dimension 'who'; applicationIdSuffix '.planner'; versionNameSuffix '-planner'; manifestPlaceholders = [appLabel: 'ELITE 루틴 (설계사)'] }
     }
     buildTypes { release { minifyEnabled false } }
     compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }

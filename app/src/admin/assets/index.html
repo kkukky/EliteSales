@@ -1433,7 +1433,7 @@ VIEWS.settings = function () {
       '<p class="note" style="margin-top:10px">휴대폰 알림 창에 오늘의 진행 상황(예: 3/6)과 다음 할 일을 보여줘요. 누르면 앱이 열려요.</p>' +
       '<div style="margin-top:12px"><button class="btn ghost" data-act="notif-toggle"><span>' + (S.notifOn === false ? '알림 켜기' : '알림 끄기') + '</span></button></div>' + (window.AndroidBridge ? '' : '<p class="note" style="margin-top:10px">웹에서는 미리보기예요. 안드로이드 앱(APK)에서 실제로 작동해요.</p>') + '</div>') +
     lockCard() + driveCard() +
-    '<div class="card"><div class="ct">엑셀 열 구성</div><p class="note" style="margin:0">' + XLS_COLS.join(' · ') + '</p></div></div>' + tabbar('settings');
+    '</div>' + tabbar('settings');
 };
 
 
