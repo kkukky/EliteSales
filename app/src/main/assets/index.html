@@ -1329,10 +1329,21 @@ function downloadXlsx() {
     } else viaLink();
 }
 /* ---------- 저장 폴더 선택 + 엑셀 저장 ---------- */
+var AND = window.AndroidBridge && window.AndroidBridge.pickFolder ? window.AndroidBridge : null;
+function andInfo() { try { return JSON.parse(AND.getFolder()); } catch (e) { return {}; } }
+function syncAnd() {
+  var i = andInfo();
+  if (i.has) { dirH = { android: true, name: i.label, ok: !!i.ok }; S.saveDirName = i.label; dirPerm = i.ok ? 'granted' : 'prompt'; } else { dirH = null; dirPerm = ''; }
+}
 var saveIssue = '', noticeOff = false, focusPick = '';
 function checkSaveFile() {
   if (!fsOK()) { saveIssue = ''; return Promise.resolve(); }
   var done = function () { var r = route(); if (r === 'home' || r === 'settings') render(); };
+  if (AND) {
+    syncAnd();
+    saveIssue = !dirH || !dirH.ok ? 'nodir' : (AND.folderHasFile(FS_FILE) ? '' : 'nofile');
+    done(); return Promise.resolve();
+  }
   if (!dirH) { saveIssue = 'nodir'; done(); return Promise.resolve(); }
   return Promise.resolve(dirH.queryPermission({ mode: 'readwrite' })).then(function (pm) {
     dirPerm = pm;
@@ -1349,7 +1360,7 @@ function noticeBar() {
 }
 var FS_FILE = 'ELITE_루틴기록.xlsx';
 var dirH = null, dirPerm = '', autoTimer = null;
-function fsOK() { return typeof window.showDirectoryPicker === 'function'; }
+function fsOK() { return !!(window.AndroidBridge && window.AndroidBridge.pickFolder) || typeof window.showDirectoryPicker === 'function'; }
 function idb(op, val) {
   return new Promise(function (res) {
     try {
@@ -1369,6 +1380,14 @@ function idb(op, val) {
 function writeFolder(silent) {
   if (!dirH) return Promise.reject({ code: 'nodir' });
   var blob; try { blob = buildXlsx(); } catch (e) { return Promise.reject({ code: 'build' }); }
+  if (dirH.android) return new Promise(function (res, rej) {
+    var rd = new FileReader();
+    rd.onload = function () {
+      var ok = false; try { ok = AND.saveToFolder(FS_FILE, String(rd.result).split(',')[1]); } catch (e) { }
+      if (ok) { skipAuto = true; S.lastExport = now(); save(); skipAuto = false; saveIssue = ''; res(); } else rej({ code: 'write' });
+    };
+    rd.readAsDataURL(blob);
+  });
   return Promise.resolve(dirH.queryPermission({ mode: 'readwrite' })).then(function (pm) {
     if (pm === 'granted') return pm;
     dirPerm = pm;
@@ -1386,7 +1405,7 @@ function schedAuto() {
     writeFolder(true).then(function () { if (route() === 'settings') render(); }, function () { dirPerm = 'prompt'; if (route() === 'settings') render(); });
   }, 5000);
 }
-if (fsOK()) idb('get').then(function (h) {
+if (AND) { syncAnd(); setTimeout(checkSaveFile, 0); } else if (fsOK()) idb('get').then(function (h) {
   if (h && h.queryPermission) { dirH = h; if (!S.saveDirName) S.saveDirName = h.name; }
   checkSaveFile();
 }); else saveIssue = '';
@@ -1398,14 +1417,6 @@ VIEWS.settings = function () {
   var ex = S.lastExport ? fmtDT(S.lastExport) : '아직 없음';
   var weekWarn = !S.lastExport || (now() - S.lastExport) > 7 * 86400000;
   return '<div class="screen">' + brandRow() + noticeBar() + '<h2 class="sub">설정</h2>' +
-    '<div class="card"><div class="ct">저장 위치 확인</div>' +
-    kv('저장 위치', '이 브라우저 안 (localStorage)') +
-    kv('저장 상태', st.ok ? '<span class="ok">정상 작동</span>' : '<span class="no">저장 불가 (닫으면 사라져요)</span>') +
-    kv('저장 이름', '<code>' + KEY + '</code>') +
-    kv('저장 용량', st.ok ? fmtSize(st.bytes) : '-') +
-    kv('마지막 저장', st.saved ? fmtDT(st.saved) : '아직 없음') +
-    kv('기록 일수', '실제 ' + real + '일' + (smp ? ' · 예시 ' + smp + '일' : '')) +
-    '<p class="note" style="margin-top:10px">기록은 서버로 보내지 않고 이 기기의 이 브라우저에만 저장돼요. 브라우저 데이터를 지우거나 다른 기기로 열면 보이지 않아요. 아래에서 엑셀 파일로 저장해 두세요.</p></div>' +
     '<div class="card"><div class="ct">루틴 기록 파일로 저장</div>' +
     kv('파일 형식', '엑셀 (.xlsx)') + kv('구성', '하루 1행 · 전체 기간') + kv('저장할 행', recs.length + '일') +
     kv('저장 폴더', dirH ? '<b>' + esc(S.saveDirName || dirH.name) + '</b>' + (dirPerm === 'granted' ? '' : ' <span class="late">확인 필요</span>') : (S.saveDirName ? esc(S.saveDirName) + ' <span class="late">다시 선택 필요</span>' : '선택 안 함 · 다운로드 폴더')) +
@@ -1414,7 +1425,7 @@ VIEWS.settings = function () {
       '<p class="note" style="margin:4px 0 0">켜면 기록을 바꾼 뒤 몇 초 지나 같은 파일에 덮어써요. 브라우저를 다시 열면 폴더 접근을 한 번 더 허용해야 할 수 있어요.</p>' : '') +
     '<div style="margin-top:12px"><button class="btn" data-act="export-xlsx">' + ic('dl') + '<span>' + (dirH ? '선택한 폴더에 엑셀로 저장' : '엑셀로 내보내기') + '</span></button></div>' +
     '<div style="margin-top:8px;display:grid;grid-template-columns:' + (dirH ? '1fr 1fr' : '1fr') + ';gap:8px"><button class="btn ghost" data-act="dir-pick"><span>' + (dirH ? '폴더 변경' : '저장 폴더 선택') + '</span></button>' + (dirH ? '<button class="btn ghost" data-act="dir-clear"><span>폴더 해제</span></button>' : '') + '</div>' +
-    (!fsOK() ? '<p class="note" style="margin-top:10px">' + (window.AndroidBridge ? '안드로이드 앱에서는 파일이 휴대폰의 \'다운로드\' 폴더에 저장돼요. 폴더 선택은 앱 업데이트에서 지원할 예정이에요.' : '이 브라우저(또는 이 화면)에서는 폴더를 직접 고를 수 없어요. 저장하면 브라우저의 다운로드 폴더로 받아져요. 폴더 선택은 PC의 크롬·엣지에서 이 앱을 새 탭으로 열면 쓸 수 있어요.') + '</p>' : '<p class="note" style="margin-top:10px">폴더 선택 창은 기본으로 문서(Documents) 폴더에서 열려요. 문서 폴더 자체는 브라우저가 막을 수 있어서, 그 안에 새 폴더(예: ELITE 기록)를 만들어 선택해 주세요.</p>') +
+    (!fsOK() ? '<p class="note" style="margin-top:10px">' + (window.AndroidBridge ? '이 앱 버전에서는 폴더를 고를 수 없어요. 파일은 휴대폰의 \'다운로드\' 폴더에 저장돼요. 앱을 최신 버전으로 업데이트해 주세요.' : '이 브라우저(또는 이 화면)에서는 폴더를 직접 고를 수 없어요. 저장하면 브라우저의 다운로드 폴더로 받아져요. 폴더 선택은 PC의 크롬·엣지에서 이 앱을 새 탭으로 열면 쓸 수 있어요.') + '</p>' : (AND ? '<p class="note" style="margin-top:10px">폴더 선택 창은 기본으로 문서(Documents) 폴더에서 열려요. 폴더를 고른 뒤 아래쪽 [이 폴더 사용]을 누르세요. 휴대폰 저장소 맨 위나 다운로드 폴더 자체는 선택할 수 없어서, 문서 안에 새 폴더(예: ELITE 기록)를 만들어 선택해 주세요.</p>' : '<p class="note" style="margin-top:10px">폴더 선택 창은 기본으로 문서(Documents) 폴더에서 열려요. 문서 폴더 자체는 브라우저가 막을 수 있어서, 그 안에 새 폴더(예: ELITE 기록)를 만들어 선택해 주세요.</p>')) +
     (exportMsg ? '<p class="note" style="margin-top:10px">' + exportMsg + '</p>' : '') +
     (exportFail ? '<p class="note" style="margin-top:10px;color:var(--brand-text)">파일을 만들지 못했어요. 다시 시도해 주세요.</p>' : '') +
     (weekWarn ? '<p class="note" style="margin-top:10px">일주일에 한 번 정도 파일로 저장해 두면 안전해요.</p>' : '') +
@@ -1627,11 +1638,21 @@ app.addEventListener('click', function (e) {
   }
   if (act === 'notice-x') { noticeOff = true; render(); return; }
   if (act === 'goto-pick') { focusPick = saveIssue === 'perm' ? 'export-xlsx' : 'dir-pick'; if (route() === 'settings') render(); else location.hash = '#settings'; return; }
+  if (act === 'dir-pick' && AND) {
+    window.onFolderPicked = function (ok) {
+      if (!ok) { render(); return; }
+      syncAnd(); saveIssue = ''; noticeOff = false; exportFail = false;
+      exportMsg = '저장 폴더를 \'' + S.saveDirName + '\'(으)로 정했어요.'; save(); render();
+      writeFolder(true).then(function () { exportMsg = '\'' + S.saveDirName + '\' 폴더에 ' + FS_FILE + '을(를) 만들어 저장했어요.'; render(); }, function () { checkSaveFile(); });
+    };
+    try { AND.pickFolder(); } catch (er) { exportMsg = '폴더 선택 화면을 열지 못했어요.'; render(); }
+    return;
+  }
   if (act === 'dir-pick') {
     if (!fsOK()) { exportMsg = '이 브라우저(또는 이 화면)에서는 폴더를 직접 고를 수 없어요. 지금은 저장하면 다운로드 폴더로 받아져요.'; render(); return; }
     try {
       window.showDirectoryPicker({ id: 'elite-routine', mode: 'readwrite', startIn: 'documents' }).then(function (h) {
-        dirH = h; dirPerm = 'granted'; S.saveDirName = h.name; idb('set', h); exportMsg = '저장 폴더를 \'' + h.name + '\'(으)로 정했어요.'; exportFail = false; save(); render();
+        dirH = h; dirPerm = 'granted'; S.saveDirName = h.name; idb('set', h); saveIssue = ''; noticeOff = false; exportMsg = '저장 폴더를 \'' + h.name + '\'(으)로 정했어요.'; exportFail = false; save(); render();
         writeFolder(true).then(function () { saveIssue = ''; exportMsg = '\'' + h.name + '\' 폴더에 ' + FS_FILE + '을(를) 만들어 저장했어요.'; render(); }, function () { checkSaveFile(); });
       }, function (er) {
         if (er && er.name === 'AbortError') return;
@@ -1641,7 +1662,7 @@ app.addEventListener('click', function (e) {
     } catch (er) { exportMsg = '이 화면에서는 폴더 선택이 막혀 있어요. 앱을 새 탭(전체 화면)으로 열어서 다시 시도해 주세요.'; render(); }
     return;
   }
-  if (act === 'dir-clear') { dirH = null; dirPerm = ''; S.saveDirName = ''; S.autoSave = false; idb('del'); noticeOff = false; saveIssue = fsOK() ? 'nodir' : ''; exportMsg = '저장 폴더 설정을 해제했어요. 이제 다운로드 폴더로 저장돼요.'; save(); render(); return; }
+  if (act === 'dir-clear') { if (AND) { try { AND.clearFolder(); } catch (er) { } } dirH = null; dirPerm = ''; S.saveDirName = ''; S.autoSave = false; idb('del'); noticeOff = false; saveIssue = fsOK() ? 'nodir' : ''; exportMsg = '저장 폴더 설정을 해제했어요. 이제 다운로드 폴더로 저장돼요.'; save(); render(); return; }
   if (act === 'auto-toggle') { S.autoSave = !S.autoSave; save(); if (S.autoSave) schedAuto(); render(); return; }
   if (act === 'export-xlsx' && dirH) {
     writeFolder(false).then(function () {

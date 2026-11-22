@@ -4,6 +4,11 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.content.ContentValues;
+import android.content.Intent;
+import android.content.UriPermission;
+import android.database.Cursor;
+import android.provider.DocumentsContract;
+import org.json.JSONObject;
 import android.net.Uri;
 import android.provider.Settings;
 import android.view.WindowManager;
@@ -23,6 +28,8 @@ import java.io.OutputStream;
 
 public class MainActivity extends Activity {
     private WebView web;
+    private static final int REQ_TREE = 7741;
+    private static final String XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
     @Override protected void onCreate(Bundle b) {
         super.onCreate(b);
@@ -60,7 +67,43 @@ public class MainActivity extends Activity {
         if (web != null) web.post(() -> web.evaluateJavascript("window.syncNotif&&syncNotif(true)", null));   // 허용 직후 알림 표시
     }
 
-    /** 엑셀 파일을 '다운로드' 폴더에 저장 */
+
+    /* ---------- 저장 폴더 선택 (SAF) ---------- */
+    private Uri tree() { String u = Notifs.prefs(this).getString("tree", ""); return u.isEmpty() ? null : Uri.parse(u); }
+    private Uri findChild(Uri t, String name) {
+        Uri kids = DocumentsContract.buildChildDocumentsUriUsingTree(t, DocumentsContract.getTreeDocumentId(t));
+        Cursor c = null;
+        try {
+            c = getContentResolver().query(kids, new String[]{DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME}, null, null, null);
+            while (c != null && c.moveToNext()) if (name.equals(c.getString(1))) return DocumentsContract.buildDocumentUriUsingTree(t, c.getString(0));
+        } catch (Exception e) { /* 폴더가 지워졌거나 접근 불가 */ } finally { if (c != null) c.close(); }
+        return null;
+    }
+    private String treeLabel(Uri t) {
+        String id = DocumentsContract.getTreeDocumentId(t);   // 예: primary:Documents/ELITE 기록
+        int k = id.indexOf(':');
+        String vol = k < 0 ? id : id.substring(0, k), path = k < 0 ? "" : id.substring(k + 1);
+        String base = "primary".equals(vol) ? "내장 저장소" : "SD카드";
+        return path.isEmpty() ? base : base + " › " + path.replace("/", " › ");
+    }
+
+    @Override protected void onActivityResult(int req, int res, Intent data) {
+        super.onActivityResult(req, res, data);
+        if (req != REQ_TREE) return;
+        boolean ok = false;
+        if (res == RESULT_OK && data != null && data.getData() != null) {
+            Uri t = data.getData();
+            try {
+                getContentResolver().takePersistableUriPermission(t, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                Notifs.prefs(this).edit().putString("tree", t.toString()).apply();
+                ok = true;
+            } catch (Exception e) { ok = false; }
+        }
+        final boolean fok = ok;
+        if (web != null) web.post(() -> web.evaluateJavascript("window.onFolderPicked&&onFolderPicked(" + fok + ")", null));
+    }
+
+    /** 엑셀 파일을 '다운로드' 폴더 또는 고른 폴더에 저장 */
     class Bridge {
         @JavascriptInterface public void setProgress(int done, int total, String title, String next, String date, String first) {
             Notifs.post(MainActivity.this, done, total, title, next, date, first);
@@ -75,6 +118,49 @@ public class MainActivity extends Activity {
                 try { startActivity(new android.content.Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()))); }
                 catch (Exception e) { startActivity(new android.content.Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()))); }
             });
+        }
+        @JavascriptInterface public void pickFolder() {
+            runOnUiThread(() -> {
+                try {
+                    Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                    i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+                    if (Build.VERSION.SDK_INT >= 26) i.putExtra(DocumentsContract.EXTRA_INITIAL_URI, DocumentsContract.buildDocumentUri("com.android.externalstorage.documents", "primary:Documents"));
+                    startActivityForResult(i, REQ_TREE);
+                } catch (Exception e) { web.evaluateJavascript("window.onFolderPicked&&onFolderPicked(false)", null); }
+            });
+        }
+        @JavascriptInterface public String getFolder() {
+            JSONObject o = new JSONObject();
+            try {
+                Uri t = tree();
+                boolean ok = false; String label = "";
+                if (t != null) {
+                    label = treeLabel(t);
+                    for (UriPermission p : getContentResolver().getPersistedUriPermissions()) if (p.getUri().equals(t) && p.isWritePermission()) ok = true;
+                }
+                o.put("has", t != null); o.put("ok", ok); o.put("label", label);
+            } catch (Exception e) { /* 빈 값 */ }
+            return o.toString();
+        }
+        @JavascriptInterface public boolean folderHasFile(String name) { Uri t = tree(); return t != null && findChild(t, name) != null; }
+        @JavascriptInterface public boolean saveToFolder(String name, String base64) {
+            try {
+                Uri t = tree(); if (t == null) return false;
+                byte[] data = Base64.decode(base64, Base64.DEFAULT);
+                Uri f = findChild(t, name);
+                if (f == null) f = DocumentsContract.createDocument(getContentResolver(), DocumentsContract.buildDocumentUriUsingTree(t, DocumentsContract.getTreeDocumentId(t)), XLSX, name);
+                if (f == null) return false;
+                OutputStream out = getContentResolver().openOutputStream(f, "wt");
+                out.write(data); out.close();
+                return true;
+            } catch (Exception e) { return false; }
+        }
+        @JavascriptInterface public void clearFolder() {
+            try {
+                Uri t = tree();
+                if (t != null) getContentResolver().releasePersistableUriPermission(t, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            } catch (Exception e) { /* 이미 해제됨 */ }
+            Notifs.prefs(MainActivity.this).edit().remove("tree").apply();
         }
         @JavascriptInterface public void clearNotif() { Notifs.clear(MainActivity.this); }
         @JavascriptInterface public boolean saveFile(String name, String base64) {
