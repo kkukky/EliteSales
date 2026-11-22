@@ -8,5 +8,6 @@ public class BootReceiver extends BroadcastReceiver {
     @Override public void onReceive(Context c, Intent i) {
         Notifs.scheduleDaily(c);
         Notifs.resetIfNewDay(c);
+        if (Notifs.prefs(c).getBoolean("lock", false)) LockService.start(c);
     }
 }

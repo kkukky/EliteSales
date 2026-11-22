@@ -47,6 +47,7 @@ public class MainActivity extends Activity {
         applyLock(Notifs.prefs(this).getBoolean("lock", false));
         Notifs.scheduleDaily(this);
         Notifs.resetIfNewDay(this);
+        if (Notifs.prefs(this).getBoolean("lock", false)) LockService.start(this);
         web.loadUrl("file:///android_asset/index.html");
     }
 
@@ -110,6 +111,7 @@ public class MainActivity extends Activity {
         }
         @JavascriptInterface public void setLockShow(boolean on) {
             Notifs.prefs(MainActivity.this).edit().putBoolean("lock", on).apply();
+            if (on) LockService.start(MainActivity.this); else LockService.stop(MainActivity.this);
             runOnUiThread(() -> applyLock(on));
         }
         @JavascriptInterface public boolean canOverlay() { return Build.VERSION.SDK_INT < 23 || Settings.canDrawOverlays(MainActivity.this); }
